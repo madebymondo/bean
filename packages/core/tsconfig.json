@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "outDir": "dist",
+    "types": ["node", "express", "./core.d.ts"]
+  },
+  "include": ["./src/**/*.ts"]
+}
