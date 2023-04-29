@@ -1,0 +1,16 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "bean dev",
+    "build": "bean build"
+  },
+  "dependencies": {
+    "@bean/core": "*"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}
