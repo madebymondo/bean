@@ -61,4 +61,9 @@ declare module "@bean/core" {
      */
     paths?: string[];
   }
+
+  interface ServeAppParams {
+    pagesDirectory: BeanConfig["pagesDirectory"];
+    templateEngine: BeanConfig["templateEngine"];
+  }
 }
