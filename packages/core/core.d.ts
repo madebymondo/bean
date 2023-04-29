@@ -15,15 +15,15 @@ declare module "@bean/core" {
     /** 
    Output path for the site 
    */
-    buildOutputPath: string;
+    buildOutputPath?: string;
     /**
      *  Rendering mode for the site
      * */
-    renderMode: "ssg" | "server";
+    renderMode?: "ssg" | "server";
     /**
      *  Template engine to use for rendering
      * */
-    templateEngine: "njk" | "liquid" | "preact";
+    templateEngine?: "njk" | "liquid" | "preact";
   }
 
   interface PageContext {
