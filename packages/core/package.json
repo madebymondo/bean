@@ -5,8 +5,12 @@
   "description": "",
   "main": "dist/bean.js",
   "types": "core.d.ts",
+  "bin": {
+    "bean": "./dist/cmd.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node",
     "build": "tsc",
     "publish": "npm publish"
   },
@@ -17,6 +21,8 @@
     "@types/express": "^4.17.17",
     "@types/node": "^18.16.2",
     "chalk": "^5.2.0",
+    "commander": "^10.0.1",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
