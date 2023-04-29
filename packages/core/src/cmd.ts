@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import "dotenv/config";
-import { Bean } from "./src/bean.js";
+import { BeanConfig } from "@bean/core";
+import { Bean } from "./index.js";
 import { Command } from "commander";
-import fs from "fs";
 import path from "path";
 
-const beanConfigPath = path.join(process.cwd(), "bean.config.json");
+const beanConfigPath = path.join(process.cwd(), ".bean.json");
 
 const beanConfigImport = await import(beanConfigPath, {
   assert: { type: "json" },
