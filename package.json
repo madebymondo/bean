@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:publish": "pnpm -r run pack",
-    "build:packages": "pnpm --filter './packages/**' run build"
+    "core:dev": "pnpm -F @bean/core run dev",
+    "core:pack": "pnpm core:build && pnpm -r run pack",
+    "core:build": "pnpm -F @bean/core run build",
+    "core:publish": "pnpm -F @bean/core run publish",
+    "demo:dev": "pnpm -F demo run dev",
+    "packages:build": "pnpm --filter './packages/**' run build"
   },
   "keywords": [],
   "author": "madebymondo",

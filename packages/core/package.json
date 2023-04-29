@@ -3,12 +3,23 @@
   "version": "0.0.1",
   "type": "module",
   "description": "",
-  "main": "dist/bean.js",
-  "types": "core.d.ts",
+  "main": "dist/index.js",
+  "typings": "core.d.ts",
+  "bin": {
+    "bean": "./dist/cmd.js"
+  },
+  "files": [
+    "dist/index.js",
+    "dist/cmd.js",
+    "core.d.ts",
+    "README.md"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "publish": "npm publish"
+    "dev": "tsc --watch",
+    "publish": "npm publish",
+    "pack": "npm pack --dry-run"
   },
   "keywords": [],
   "author": "",
@@ -17,8 +28,12 @@
     "@types/express": "^4.17.17",
     "@types/node": "^18.16.2",
     "chalk": "^5.2.0",
+    "commander": "^10.0.1",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "ts-node": "^10.9.1",
+    "nunjucks": "^3.2.4",
+    "preact": "^10.13.2",
+    "preact-render-to-string": "^6.0.2",
     "typescript": "^5.0.4"
   }
 }

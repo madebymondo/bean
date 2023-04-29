@@ -1,0 +1,17 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "bean dev",
+    "build": "bean build"
+  },
+  "dependencies": {
+    "@bean/core": "file:../packages/core"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}

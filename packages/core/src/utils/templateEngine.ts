@@ -1,3 +1,4 @@
+import { BeanConfig } from "@bean/core";
 import chalk from "chalk";
 
 export function renderTemplateEngine(engine: BeanConfig["templateEngine"]) {
