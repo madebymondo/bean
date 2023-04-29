@@ -8,7 +8,7 @@
     "build": "bean build"
   },
   "dependencies": {
-    "@bean/core": "*"
+    "@bean/core": "file:../packages/core"
   },
   "keywords": [],
   "author": "",
