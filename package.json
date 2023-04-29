@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:publish": "pnpm -r run pack",
-    "build:packages": "pnpm --filter './packages/**' run build"
+    "demo:dev": "pnpm packages:build && pnpm install && pnpm --filter demo run dev",
+    "packages:build": "pnpm --filter './packages/**' run build"
   },
   "keywords": [],
   "author": "madebymondo",
