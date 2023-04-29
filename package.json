@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "core:dev": "pnpm -F @bean/core run dev",
     "core:pack": "pnpm core:build && pnpm -r run pack",
     "core:build": "pnpm -F @bean/core run build",
     "core:publish": "pnpm -F @bean/core run publish",
