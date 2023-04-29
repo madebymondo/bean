@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
     "module": "nodenext",
     "outDir": "dist",
     "types": ["node", "express", "./core.d.ts"],
-    "resolveJsonModule": true 
+    "resolveJsonModule": true ,
   },
-  "include": ["./cmd.ts", "./src/**/*.ts"]
+  "include": ["./src/**/*.ts"]
 }
