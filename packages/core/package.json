@@ -3,16 +3,22 @@
   "version": "0.0.1",
   "type": "module",
   "description": "",
-  "main": "dist/bean.js",
-  "types": "core.d.ts",
+  "main": "dist/index.js",
+  "typings": "core.d.ts",
   "bin": {
     "bean": "./dist/cmd.js"
   },
+  "files": [
+    "dist/index.js",
+    "dist/cmd.js",
+    "core.d.ts",
+    "README.md"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node",
     "build": "tsc",
-    "publish": "npm publish"
+    "publish": "npm publish",
+    "pack": "npm pack --dry-run"
   },
   "keywords": [],
   "author": "",
@@ -24,7 +30,6 @@
     "commander": "^10.0.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   }
 }
