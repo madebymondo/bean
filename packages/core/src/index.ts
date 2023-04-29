@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import { BeanConfig } from "@bean/core";
 
 export class Bean {
   /**
