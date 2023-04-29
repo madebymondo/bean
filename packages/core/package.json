@@ -30,6 +30,9 @@
     "commander": "^10.0.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "nunjucks": "^3.2.4",
+    "preact": "^10.13.2",
+    "preact-render-to-string": "^6.0.2",
     "typescript": "^5.0.4"
   }
 }
