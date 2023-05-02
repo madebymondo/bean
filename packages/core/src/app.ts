@@ -41,22 +41,14 @@ export async function serveApp(params: ServeAppParams) {
       (item) => item.key === "createPaths"
     )?.callback;
 
-    /*
-    TODO: Create a router for each nested directory.
-    Is router best way or just straight dynamic routes?
-    */
+    const basename = filePath.replace(pagesDirectory, "");
+    const routeQueryPath = basename.replaceAll("[", ":").replaceAll("].ts", "");
 
-    /* 
-    TODO: Parse the value of the .ts page file. Check
-    whether or not it's dynamic or not ([slug].ts)
-    */
-
-    /* TODO: Pass the context into createPage when called  */
+    app.get(routeQueryPath, (req, res, next) => {
+      const page = createPage(req);
+      res.json({ messsage: page });
+    });
   }
-
-  app.get("/", (req, res, next) => {
-    res.send({ message: "Server working" });
-  });
 
   app.listen(PORT, () =>
     console.log(chalk.green(`Server started on http://localhost:${PORT}`))
