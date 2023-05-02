@@ -7,13 +7,12 @@ const pages = [
     title: "post 2",
   },
 ];
-
 export function createPage(ctx): CreatePageParams {
   const post = ctx.params.post;
   return {
     context: {
       path: post,
-      template: "page.njk",
+      template: "base.njk",
       data: pages.find((page) => page.post === post),
     },
   };
@@ -22,7 +21,7 @@ export function createPage(ctx): CreatePageParams {
 export function createPaths() {
   const paths = pages.map((page) => {
     return {
-      path: `block/${page.post}`,
+      path: `blog/${page.post}`,
     };
   });
 

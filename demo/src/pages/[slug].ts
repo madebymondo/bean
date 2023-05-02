@@ -7,8 +7,8 @@ const pages = [
     title: "About Page",
   },
   {
-    slug: "Work",
-    title: "Work Page",
+    slug: "work",
+    title: "Work Page 2",
   },
 ];
 
@@ -17,7 +17,7 @@ export function createPage(ctx): CreatePageParams {
   return {
     context: {
       path: slug,
-      template: "page.njk",
+      template: "base.njk",
       data: pages.find((page) => page.slug === slug),
     },
   };
