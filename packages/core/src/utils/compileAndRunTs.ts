@@ -51,7 +51,7 @@ export async function compileAndRunTS(path: string): Promise<any> {
   const importedJSFile = await import(convertedJSPath);
 
   const functionsToRun = Object.keys(importedJSFile).map(async (key) => {
-    return await importedJSFile[key]();
+    return { key, callback: await importedJSFile[key] };
   });
 
   const content = await Promise.all(functionsToRun);

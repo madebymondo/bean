@@ -1,12 +1,19 @@
 import { BeanConfig } from "@bean/core";
 import chalk from "chalk";
+import nunjucks from "nunjucks";
+import { Express } from "express";
 
-export function renderTemplateEngine(engine: BeanConfig["templateEngine"]) {
+export function renderTemplateEngine(
+  engine: BeanConfig["templateEngine"],
+  views: BeanConfig["viewsDirectory"],
+  app: Express
+) {
   switch (engine) {
     case "njk":
-      console.log("render nunjucks");
-    case "liquid":
-      console.log("render liquide");
+      return nunjucks.configure(views, {
+        autoescape: true,
+        express: app,
+      });
     case "preact":
       console.log("render preact");
     default:
