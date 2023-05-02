@@ -9,6 +9,8 @@ export class Bean {
   paths?: string[];
   pagesDirectory: BeanConfig["pagesDirectory"];
   buildOutputPath: BeanConfig["buildOutputPath"];
+  viewsDirectory: BeanConfig["viewsDirectory"];
+  watchTargets: BeanConfig["watchTargets"];
   passthroughDirectories: BeanConfig["passthroughDirectories"];
   renderMode: BeanConfig["renderMode"];
   templateEngine: BeanConfig["templateEngine"];
@@ -16,8 +18,16 @@ export class Bean {
   constructor(config: BeanConfig) {
     /* Configuration */
     this.pagesDirectory = config.pagesDirectory || "pages";
+    this.viewsDirectory = config.viewsDirectory || "views";
     this.buildOutputPath = config.buildOutputPath || "dist";
     this.passthroughDirectories = config.passthroughDirectories || [];
+
+    this.watchTargets = config.watchTargets || [
+      `${this.pagesDirectory}/**/*`,
+      `${this.viewsDirectory}/**/*`,
+      `${this.passthroughDirectories}/**/*`,
+    ];
+
     this.renderMode = config.renderMode || "ssg";
     this.templateEngine = config.templateEngine || "njk";
 
@@ -30,6 +40,8 @@ export class Bean {
   async serve() {
     await serveApp({
       pagesDirectory: this.pagesDirectory,
+      viewsDirectory: this.viewsDirectory,
+      watchTargets: this.watchTargets,
       templateEngine: this.templateEngine,
     });
   }
