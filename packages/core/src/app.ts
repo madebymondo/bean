@@ -4,6 +4,8 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 import { compileAndRunTS } from "./utils/compileAndRunTs.js";
+import { renderTemplateEngine } from "./utils/templateEngine.js";
+import chokidar from "chokidar";
 
 const PORT = 3000;
 
@@ -24,9 +26,19 @@ function* walkSync(dir) {
 }
 
 export async function serveApp(params: ServeAppParams) {
-  const { pagesDirectory, templateEngine } = params;
+  const { pagesDirectory, templateEngine, viewsDirectory } = params;
 
   const app = express();
+
+  const watcher = chokidar.watch(params.watchTargets, { ignoreInitial: true });
+
+  watcher.on("all", async () => {
+    //TODO: Implement server reload
+    console.log(chalk.blue(`Change detected restarting server`));
+  });
+
+  /* Initialize the template engine for the express app */
+  renderTemplateEngine(templateEngine, viewsDirectory, app);
 
   /* Logic for file based routing */
   for (const filePath of walkSync(pagesDirectory)) {
@@ -47,13 +59,31 @@ export async function serveApp(params: ServeAppParams) {
 
     /* Create express route for each page */
     app.get(routeQueryPath, (req, res, next) => {
-      /* Run createPage function and pass it the context */
-      const page = createPage(req);
-      res.json({ messsage: page });
+      /* Check if the current route exits in the generated paths */
+      const availablePaths = createPaths();
+      const routeExists = availablePaths.paths.find(
+        (item) =>
+          item.path.replace(/^\/|\/$/g, "") === req.path.replace(/^\/|\/$/g, "")
+      );
+
+      if (routeExists) {
+        /* Run createPage function and pass it the context */
+        const page = createPage(req);
+        res.render(page.context.template, page.context.data);
+      } else {
+        /* If the route doesn't exist go to the 404 catch all route */
+        next();
+      }
     });
   }
 
+  /* 404 catch-all */
+  app.get("*", (req, res, next) => {
+    res.status(404);
+    res.send("Page not found");
+  });
+
   app.listen(PORT, () =>
-    console.log(chalk.green(`Server started on http://localhost:${PORT}`))
+    console.log(chalk.green(`Server started on: ${PORT}`))
   );
 }
