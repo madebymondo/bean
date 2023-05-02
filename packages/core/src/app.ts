@@ -41,10 +41,13 @@ export async function serveApp(params: ServeAppParams) {
       (item) => item.key === "createPaths"
     )?.callback;
 
+    /* Format links from [param].ts to match :param */
     const basename = filePath.replace(pagesDirectory, "");
     const routeQueryPath = basename.replaceAll("[", ":").replaceAll("].ts", "");
 
+    /* Create express route for each page */
     app.get(routeQueryPath, (req, res, next) => {
+      /* Run createPage function and pass it the context */
       const page = createPage(req);
       res.json({ messsage: page });
     });
