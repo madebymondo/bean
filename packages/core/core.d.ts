@@ -12,6 +12,14 @@ declare module "@bean/core" {
   passedthrough during the build 
   */
     passthroughDirectories?: string[];
+    /**
+     * Directory for templates and views
+     */
+    viewsDirectory?: string;
+    /**
+     * Directories and files to watch for server and frontend updates
+     */
+    watchTargets: string[];
     /** 
    Output path for the site 
    */
@@ -23,7 +31,7 @@ declare module "@bean/core" {
     /**
      *  Template engine to use for rendering
      * */
-    templateEngine?: "njk" | "liquid" | "preact";
+    templateEngine?: "njk" | "preact";
   }
 
   interface PageContext {
@@ -64,6 +72,8 @@ declare module "@bean/core" {
 
   interface ServeAppParams {
     pagesDirectory: BeanConfig["pagesDirectory"];
+    viewsDirectory: BeanConfig["viewsDirectory"];
+    watchTargets: BeanConfig["watchTargets"];
     templateEngine: BeanConfig["templateEngine"];
   }
 }
