@@ -20,6 +20,7 @@ export function createPage(ctx): CreatePageParams {
       slug,
       template: "base.njk",
       data: pages.find((page) => page.slug === slug),
+      prerender: true,
     },
   };
 }
