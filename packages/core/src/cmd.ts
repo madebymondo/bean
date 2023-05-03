@@ -20,4 +20,11 @@ program
     await bean.serve();
   });
 
+program
+  .command("build")
+  .description("Builds output for the Bean site")
+  .action(async () => {
+    await bean.build(beanConfig.renderMode || "ssg");
+  });
+
 program.parse();
