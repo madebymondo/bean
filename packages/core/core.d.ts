@@ -37,10 +37,7 @@ declare module "@bean/core" {
   }
 
   interface PageContext {
-    /**
-  Generated path for the page (ex. '/about') 
-  */
-    path: string;
+    [key: string]: any;
     /**
      * Page template to use. This is relative to the 'views' path
      * specified in the config file.
