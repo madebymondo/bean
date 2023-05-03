@@ -1,4 +1,6 @@
 declare module "@bean/core" {
+  import { Express } from "express";
+
   /**
    * Configuration options for .bean.json
    */
@@ -75,5 +77,18 @@ declare module "@bean/core" {
     viewsDirectory: BeanConfig["viewsDirectory"];
     watchTargets: BeanConfig["watchTargets"];
     templateEngine: BeanConfig["templateEngine"];
+  }
+
+  interface RenderTemplateEngineParams {
+    engine: BeanConfig["templateEngine"];
+    views: BeanConfig["viewsDirectory"];
+    app: Express;
+  }
+
+  interface RenderBuildTemplateParams {
+    engine: BeanConfig["templateEngine"];
+    views: BeanConfig["viewsDirectory"];
+    template: string;
+    data: any;
   }
 }
