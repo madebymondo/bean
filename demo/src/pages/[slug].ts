@@ -10,13 +10,14 @@ const pages = [
     slug: "work",
     title: "Work Page 2",
   },
+  { slug: "test/one", title: "Test one" },
 ];
 
 export function createPage(ctx): CreatePageParams {
   const slug = ctx.params.slug;
   return {
     context: {
-      path: slug,
+      slug,
       template: "base.njk",
       data: pages.find((page) => page.slug === slug),
     },
@@ -26,7 +27,7 @@ export function createPage(ctx): CreatePageParams {
 export function createPaths() {
   const paths = pages.map((page) => {
     return {
-      path: page.slug,
+      slug: page.slug,
     };
   });
 
