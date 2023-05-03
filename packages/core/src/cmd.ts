@@ -10,6 +10,7 @@ const program = new Command();
 const beanConfigPath = path.join(process.cwd(), "bean.config.ts");
 const beanConfigFunctions = await compileAndRunTS(beanConfigPath);
 const beanConfig = beanConfigFunctions.find((func) => func.key === "default");
+const { renderMode } = beanConfig.callback();
 
 const bean = new Bean(beanConfig.callback());
 
@@ -24,7 +25,7 @@ program
   .command("build")
   .description("Builds output for the Bean site")
   .action(async () => {
-    await bean.build(beanConfig.renderMode || "ssg");
+    await bean.build(renderMode || "ssg");
   });
 
 program.parse();
