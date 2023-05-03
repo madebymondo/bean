@@ -9,8 +9,10 @@
     "core:pack": "pnpm core:build && pnpm -r run pack",
     "core:build": "pnpm -F @bean/core run build",
     "core:publish": "pnpm -F @bean/core run publish",
-    "demo:dev": "pnpm -F demo run dev",
-    "demo:build": "pnpm -F demo run build",
+    "demo-static:dev": "pnpm -F demo-static run dev",
+    "demo-static:build": "pnpm -F demo-static run build",
+    "demo-server:dev": "pnpm -F demo-server run dev",
+    "demo-server:build": "pnpm -F demo-server run build",
     "packages:build": "pnpm --filter './packages/**' run build"
   },
   "keywords": [],
