@@ -43,7 +43,10 @@ export async function serveApp(params: ServeAppParams) {
 
     /* Format links from [param].ts to match :param */
     const basename = filePath.replace(pagesDirectory, "");
-    const routeQueryPath = basename.replaceAll("[", ":").replaceAll("].ts", "");
+    const routeQueryPath = basename
+      .replaceAll("[", ":")
+      .replaceAll("]", "")
+      .replaceAll(".ts", "");
 
     /* Create express route for each page */
     app.get(`${routeQueryPath}(*)?`, (req, res, next) => {
