@@ -2,6 +2,7 @@ import chalk from "chalk";
 import { BeanConfig } from "@bean/core";
 import { serveApp } from "./app.js";
 import { buildStaticFiles } from "./utils/buildStaticFiles.js";
+import { buildServerFiles } from "utils/buildServerFiles.js";
 
 export class Bean {
   /**
@@ -59,7 +60,12 @@ export class Bean {
           views: this.viewsDirectory,
         });
       case "server":
-        console.log("Generate express app");
+        return buildServerFiles({
+          templateEngine: this.templateEngine,
+          pagesDirectory: this.pagesDirectory,
+          outputPath: this.buildOutputPath,
+          views: this.viewsDirectory,
+        });
       default:
         throw new Error(
           chalk.red(
