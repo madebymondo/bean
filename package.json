@@ -10,6 +10,7 @@
     "core:build": "pnpm -F @bean/core run build",
     "core:publish": "pnpm -F @bean/core run publish",
     "demo:dev": "pnpm -F demo run dev",
+    "demo:build": "pnpm -F demo run build",
     "packages:build": "pnpm --filter './packages/**' run build"
   },
   "keywords": [],
