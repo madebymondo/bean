@@ -9,6 +9,7 @@
     "esModuleInterop": true
   },
   "include": ["./src/**/*.ts"],
+  "exclude": ["./src/templates/server.tmpl.ts"],
   "watchOptions": {
     // Use native file system events for files and directories
     "watchFile": "useFsEvents",
@@ -21,6 +22,5 @@
     // Finally, two additional settings for reducing the amount of possible
     // files to track  work from these directories
     "excludeDirectories": ["**/node_modules", "dist"],
-    "excludeFiles": []
   }
 }
