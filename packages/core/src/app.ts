@@ -46,7 +46,7 @@ export async function serveApp(params: ServeAppParams) {
     const routeQueryPath = basename.replaceAll("[", ":").replaceAll("].ts", "");
 
     /* Create express route for each page */
-    app.get(routeQueryPath, (req, res, next) => {
+    app.get(`${routeQueryPath}(*)?`, (req, res, next) => {
       /* Run createPage function and pass it the context */
       const page = createPage(req);
 
