@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { BeanConfig } from "@bean/core";
 import { serveApp } from "./app.js";
+import { buildStaticFiles } from "./utils/buildStaticFiles.js";
 
 export class Bean {
   /**
@@ -28,7 +29,6 @@ export class Bean {
       `${this.passthroughDirectories}/**/*`,
     ];
 
-    this.renderMode = config.renderMode || "ssg";
     this.templateEngine = config.templateEngine || "njk";
 
     this.paths = [];
@@ -49,10 +49,15 @@ export class Bean {
   /**
    *   Builds an output of files
    * */
-  build(mode: BeanConfig["renderMode"]) {
+  async build(mode: BeanConfig["renderMode"]) {
     switch (mode) {
       case "ssg":
-        console.log("Generate static files from path");
+        return buildStaticFiles({
+          templateEngine: this.templateEngine,
+          pagesDirectory: this.pagesDirectory,
+          outputPath: this.buildOutputPath,
+          views: this.viewsDirectory,
+        });
       case "server":
         console.log("Generate express app");
       default:
