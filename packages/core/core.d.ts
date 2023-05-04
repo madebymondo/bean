@@ -48,12 +48,6 @@ declare module "@bean/core" {
   accept any valid object whether it's JS or a response from a CMS.
    */
     data: any;
-    /**
-     * This will prerender the page on build if you are
-     * using the 'server' render mode. You can omit this
-     * if you are using the "ssg" render mode.
-     *  */
-    prerender?: boolean;
   }
 
   interface CreatePageParams {
