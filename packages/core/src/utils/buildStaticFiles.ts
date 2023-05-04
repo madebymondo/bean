@@ -5,6 +5,7 @@ import { BeanConfig } from "@bean/core";
 import { compileAndRunTS } from "./compileAndRunTs.js";
 import { renderBuldTemplate } from "./templateEngine.js";
 import chalk from "chalk";
+import { generateHTMLOutputPath } from "./generateHTMLOutputPath.js";
 
 interface BuildSiteParams {
   pagesDirectory: BeanConfig["pagesDirectory"];
@@ -33,10 +34,6 @@ export async function buildStaticFiles(params: BuildSiteParams) {
 
     const allRoutePaths = createPaths().paths;
 
-    /* Get all possible [params] values for a route */
-    const routeQueryPaths = [...pagePath.matchAll(/(?<=\[).+?(?=\])/g)];
-    const queryValues = routeQueryPaths.map((item) => item[0]);
-
     allRoutePaths.forEach((routeData) => {
       const routeContext = { params: routeData };
 
@@ -51,20 +48,10 @@ export async function buildStaticFiles(params: BuildSiteParams) {
         data,
       });
 
-      /* Generate the path for the HTML output */
-      let htmlOutputPath = pagePath
-        .replace(pagesPath, "")
-        .replace(".ts", "index.html");
-
-      queryValues.forEach((queryValue) => {
-        if (routeData[queryValue] === "/") {
-          htmlOutputPath = htmlOutputPath.replace(`[${queryValue}]`, "");
-        } else {
-          htmlOutputPath = htmlOutputPath.replace(
-            `[${queryValue}]`,
-            `${routeData[queryValue]}/`
-          );
-        }
+      const htmlOutputPath = generateHTMLOutputPath({
+        path: pagePath,
+        pagesPath: pagesPath,
+        context: page.context,
       });
 
       /* Write the HTML file */
