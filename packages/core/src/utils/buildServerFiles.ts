@@ -1,6 +1,11 @@
 import { BeanConfig } from "@bean/core";
 import fs from "fs-extra";
 import path from "path";
+import { walkSync } from "./walkSync.js";
+import { compileAndRunTS } from "./compileAndRunTs.js";
+import { renderBuldTemplate } from "./templateEngine.js";
+import chalk from "chalk";
+import { generateHTMLOutputPath } from "./generateHTMLOutputPath.js";
 
 interface BuildServerFilesParams {
   pagesDirectory: BeanConfig["pagesDirectory"];
@@ -15,6 +20,75 @@ interface BuildServerFilesParams {
  */
 export async function buildServerFiles(params: BuildServerFilesParams) {
   const { pagesDirectory, outputPath, templateEngine, views } = params;
+
+  const pagesPath = path.join(process.cwd(), pagesDirectory);
+  const buildPath = path.join(process.cwd(), outputPath);
+  const prerenderPath = path.join(buildPath, "pre-rendered");
+
+  for (const page of walkSync(pagesPath)) {
+    const pageContent = await compileAndRunTS(page);
+
+    /* Get the createPage and createPaths callback */
+    const createPage = pageContent.find(
+      (item) => item.key === "createPage"
+    )?.callback;
+
+    const createPaths = pageContent.find(
+      (item) => item.key === "createPaths"
+    )?.callback;
+
+    if (createPaths) {
+      /* Generate HTML for paths with prerender: true */
+      const pagesToPrerender = createPaths().paths.filter(
+        (page) => page.prerender === true
+      );
+
+      if (pagesToPrerender) {
+        console.log(chalk.blue(`Generating pre-rendered routes...`));
+      }
+
+      pagesToPrerender?.forEach((prerenderedPage) => {
+        const prerenderedPageContext = {
+          params: prerenderedPage,
+        };
+        const { context } = createPage(prerenderedPageContext);
+        const { template, data } = context;
+
+        const generatedHTML = renderBuldTemplate({
+          engine: templateEngine,
+          views,
+          template,
+          data,
+        });
+
+        const htmlOutputPath = generateHTMLOutputPath({
+          path: page,
+          context,
+          pagesPath,
+        });
+
+        /* Write the HTML file */
+        const builtHTMLPath = path.join(prerenderPath, htmlOutputPath);
+
+        try {
+          fs.outputFileSync(builtHTMLPath, generatedHTML);
+          console.log(
+            chalk.green(
+              `Successfully created pre-rendered page: ${htmlOutputPath}`
+            )
+          );
+        } catch (error) {
+          console.log(
+            chalk.red(
+              `Error creating pre-rendered page: ${builtHTMLPath}: ${error}`
+            )
+          );
+        }
+      });
+    } else {
+      console.log(chalk.blue(`Generating server fiile...`));
+    }
+  }
 
   // TODO: Implement this - use buildStaticFiles and point output to 'prerendered'
   /* Generate static files for all pre-rendered routes */
