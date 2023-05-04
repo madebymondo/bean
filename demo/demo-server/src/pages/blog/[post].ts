@@ -18,15 +18,3 @@ export function createPage(ctx): CreatePageParams {
     },
   };
 }
-
-export function createPaths() {
-  const paths = pages.map((page) => {
-    return {
-      post: page.post,
-    };
-  });
-
-  return {
-    paths,
-  };
-}
