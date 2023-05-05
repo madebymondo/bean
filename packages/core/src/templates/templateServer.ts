@@ -4,7 +4,8 @@ import { GenerateServerTemplateParams } from "@bean/core";
  * Generates the contents of the server template
  * */
 export function generateServerTemplate(params: GenerateServerTemplateParams) {
-  const { templateEngine, viewsDirectory, pagesDirectory, port } = params;
+  const { templateEngine, viewsDirectory, pagesDirectory, buildPath, port } =
+    params;
 
   const templateImports = `
     import express from "express";
@@ -40,7 +41,7 @@ export function generateServerTemplate(params: GenerateServerTemplateParams) {
 
   if (templateEngine === "njk") {
     templateEngineConfiguration = `
-    nunjucks.configure(${viewsDirectory}, {
+    nunjucks.configure("${viewsDirectory}", {
         autoescape: true,
         express: app,
     });
@@ -49,20 +50,21 @@ export function generateServerTemplate(params: GenerateServerTemplateParams) {
 
   const appRoutes = `
     /* Render all pre-rendered HTML files before server routes */
-    app.use("*", express.static("pre-rendered"));
+    app.use("/", express.static(path.join("${buildPath}","pre-rendered")));
 
-    for (const route of walkSync(${pagesDirectory})) {
-      const { filePath, pagesDirectory, views, page } = route;
-
+    for (const route of walkSync("${buildPath}/server-routes")) {
       /* Format links from [param].ts to match :param */
-      const basename = filePath.replace(pagesDirectory, "");
+      const basename = route.replace("${buildPath}/server-routes", "");
       const routeQueryPath = basename
         .replaceAll("[", ":")
         .replaceAll("]", "")
-        .replaceAll(".ts", "");
+        .replaceAll(".js", "");
 
       /* Create express route for each page */
-      app.get(routeQueryPath + "(*)?", (req, res, next) => {
+      app.get(routeQueryPath + "(*)?", async (req, res, next) => {
+        const {createPage} = await import(route);
+        const page = await createPage(req);
+
         /* Send to 404 if there is no data sent to template */
         if (page?.context?.data) {
           res.render(page.context.template, page.context.data);
@@ -80,7 +82,7 @@ export function generateServerTemplate(params: GenerateServerTemplateParams) {
   `;
 
   const appListen = `
-    app.listen(PORT, () =>
+    app.listen(${port}, () =>
       console.log('Server started on http://localhost:${port}')
     );
   `;
