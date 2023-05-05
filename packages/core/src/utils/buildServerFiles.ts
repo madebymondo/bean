@@ -2,8 +2,8 @@ import { BeanConfig } from "@bean/core";
 import fs from "fs-extra";
 import path from "path";
 import { walkSync } from "./walkSync.js";
-import { compileAndRunTS } from "./compileAndRunTs.js";
-import { renderBuldTemplate } from "./templateEngine.js";
+import { compileAndRunTS, tsCompile } from "./compileAndRunTs.js";
+import { renderBuildTemplate } from "./templateEngine.js";
 import chalk from "chalk";
 import { generateHTMLOutputPath } from "./generateHTMLOutputPath.js";
 import { generateServerTemplate } from "../templates/templateServer.js";
@@ -26,6 +26,11 @@ export async function buildServerFiles(params: BuildServerFilesParams) {
   const pagesPath = path.join(process.cwd(), pagesDirectory);
   const buildPath = path.join(process.cwd(), outputPath);
   const prerenderPath = path.join(buildPath, "pre-rendered");
+
+  const outputServerRoutesPromises: {
+    path: string;
+    content: Promise<void>;
+  }[] = [];
 
   for (const page of walkSync(pagesPath)) {
     const pageContent = await compileAndRunTS(page);
@@ -56,9 +61,9 @@ export async function buildServerFiles(params: BuildServerFilesParams) {
         const { context } = createPage(prerenderedPageContext);
         const { template, data } = context;
 
-        const generatedHTML = renderBuldTemplate({
+        const generatedHTML = renderBuildTemplate({
           engine: templateEngine,
-          views,
+          views: viewsPath,
           template,
           data,
         });
@@ -88,24 +93,55 @@ export async function buildServerFiles(params: BuildServerFilesParams) {
         }
       });
     } else {
-      console.log(chalk.blue(`Generating server file...`));
-      const template = generateServerTemplate({
-        pagesDirectory: pagesPath,
-        viewsDirectory: viewsPath,
-        templateEngine,
-        port: 3000,
+      console.log(chalk.blue(`Generating server bundle...`));
+      outputServerRoutesPromises.push({
+        path: page,
+        content: await compileAndRunTS(page),
       });
-
-      console.log(template);
     }
   }
 
-  // TODO: Implement this - use buildStaticFiles and point output to 'prerendered'
-  /* Generate static files for all pre-rendered routes */
-
-  // TODO: Implement this
   /* Create the manifest.js contains route information for the app */
+  const serverRoutes = await Promise.all(outputServerRoutesPromises);
 
-  // TODO: Implement this
-  /* Parse the server.tmpl.ts file and fill in the neccessary values */
+  for (const serverRoute of serverRoutes) {
+    try {
+      const serverRouteOutputPath = serverRoute.path
+        .replace(pagesDirectory, `${outputPath}/server-routes`)
+        .replace(".ts", ".js");
+
+      const serverRouteContents = fs.readFileSync(serverRoute.path, {
+        encoding: "utf-8",
+      });
+      const compiledJS = tsCompile(serverRouteContents);
+
+      fs.outputFileSync(serverRouteOutputPath, compiledJS, {
+        encoding: "utf-8",
+      });
+
+      console.log(
+        chalk.green(`Successfully compiled route: ${serverRouteOutputPath}`)
+      );
+    } catch (error) {
+      console.log(chalk.red(`Error compiling route: ${serverRoute.path}`));
+    }
+  }
+
+  /* Generate the content for the server template */
+  const template = generateServerTemplate({
+    pagesDirectory: pagesPath,
+    viewsDirectory: viewsPath,
+    buildPath: buildPath,
+    templateEngine,
+    port: 3000,
+  });
+
+  const serverPath = path.join(buildPath, "server.js");
+
+  try {
+    fs.outputFileSync(serverPath, template, { encoding: "utf-8" });
+    console.log(chalk.green(`Successfully created server file`));
+  } catch (error) {
+    console.log(chalk.red(`Error creating server file: ${error}`));
+  }
 }
