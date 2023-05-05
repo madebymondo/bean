@@ -6,6 +6,7 @@ import { compileAndRunTS } from "./compileAndRunTs.js";
 import { renderBuldTemplate } from "./templateEngine.js";
 import chalk from "chalk";
 import { generateHTMLOutputPath } from "./generateHTMLOutputPath.js";
+import { generateServerTemplate } from "../templates/templateServer.js";
 
 interface BuildServerFilesParams {
   pagesDirectory: BeanConfig["pagesDirectory"];
@@ -21,6 +22,7 @@ interface BuildServerFilesParams {
 export async function buildServerFiles(params: BuildServerFilesParams) {
   const { pagesDirectory, outputPath, templateEngine, views } = params;
 
+  const viewsPath = path.join(process.cwd(), views);
   const pagesPath = path.join(process.cwd(), pagesDirectory);
   const buildPath = path.join(process.cwd(), outputPath);
   const prerenderPath = path.join(buildPath, "pre-rendered");
@@ -86,7 +88,15 @@ export async function buildServerFiles(params: BuildServerFilesParams) {
         }
       });
     } else {
-      console.log(chalk.blue(`Generating server fiile...`));
+      console.log(chalk.blue(`Generating server file...`));
+      const template = generateServerTemplate({
+        pagesDirectory: pagesPath,
+        viewsDirectory: viewsPath,
+        templateEngine,
+        port: 3000,
+      });
+
+      console.log(template);
     }
   }
 
