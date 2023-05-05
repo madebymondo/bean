@@ -87,6 +87,7 @@ declare module "@bean/core" {
     templateEngine: BeanConfig["templateEngine"];
     pagesDirectory: BeanConfig["pagesDirectory"];
     viewsDirectory: BeanConfig["viewsDirectory"];
+    buildPath: BeanConfig["buildOutputPath"];
     port: number;
   }
 }
