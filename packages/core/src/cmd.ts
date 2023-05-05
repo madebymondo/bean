@@ -12,7 +12,7 @@ const program = new Command();
 const beanConfigPath = path.join(process.cwd(), "bean.config.ts");
 const beanConfigFunctions = await compileAndRunTS(beanConfigPath);
 const beanConfig = beanConfigFunctions.find((func) => func.key === "default");
-const { renderMode, b } = beanConfig.callback();
+const { renderMode, buildOutputPath } = beanConfig.callback();
 
 const bean = new Bean(beanConfig.callback());
 
@@ -36,7 +36,11 @@ program
   .action(() => {
     console.log(`Starting server...`);
     const serverProcess = exec(
-      `node ${path.join(process.cwd(), "dist", "server.js")}`
+      `node ${path.join(
+        process.cwd(),
+        buildOutputPath ? buildOutputPath : "dist",
+        "server.js"
+      )}`
     );
 
     serverProcess.stdout.on("data", (data) => {
