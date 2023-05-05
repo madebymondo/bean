@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import fs from "fs";
+import fs from "fs-extra";
 
 /**
  * Compiles the contents of a TypeScript file into JavaScript
@@ -8,7 +8,7 @@ import fs from "fs";
  * @param options TypeScript configuration options
  * @returns
  */
-function tsCompile(
+export function tsCompile(
   source: string,
   options: ts.TranspileOptions = null
 ): string {

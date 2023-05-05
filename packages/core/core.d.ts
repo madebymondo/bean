@@ -1,4 +1,6 @@
 declare module "@bean/core" {
+  import { Express } from "express";
+
   /**
    * Configuration options for .bean.json
    */
@@ -35,10 +37,7 @@ declare module "@bean/core" {
   }
 
   interface PageContext {
-    /**
-  Generated path for the page (ex. '/about') 
-  */
-    path: string;
+    [key: string]: any;
     /**
      * Page template to use. This is relative to the 'views' path
      * specified in the config file.
@@ -49,12 +48,6 @@ declare module "@bean/core" {
   accept any valid object whether it's JS or a response from a CMS.
    */
     data: any;
-    /**
-     * This will prerender the page on build if you are
-     * using the 'server' render mode. You can omit this
-     * if you are using the "ssg" render mode.
-     *  */
-    prerender?: boolean;
   }
 
   interface CreatePageParams {
@@ -75,5 +68,26 @@ declare module "@bean/core" {
     viewsDirectory: BeanConfig["viewsDirectory"];
     watchTargets: BeanConfig["watchTargets"];
     templateEngine: BeanConfig["templateEngine"];
+  }
+
+  interface RenderTemplateEngineParams {
+    engine: BeanConfig["templateEngine"];
+    views: BeanConfig["viewsDirectory"];
+    app: Express;
+  }
+
+  interface RenderBuildTemplateParams {
+    engine: BeanConfig["templateEngine"];
+    views: BeanConfig["viewsDirectory"];
+    template: string;
+    data: any;
+  }
+
+  interface GenerateServerTemplateParams {
+    templateEngine: BeanConfig["templateEngine"];
+    pagesDirectory: BeanConfig["pagesDirectory"];
+    viewsDirectory: BeanConfig["viewsDirectory"];
+    buildPath: BeanConfig["buildOutputPath"];
+    port: number;
   }
 }

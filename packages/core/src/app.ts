@@ -1,29 +1,13 @@
 import { ServeAppParams } from "@bean/core";
 import chalk from "chalk";
 import express from "express";
-import fs from "fs";
 import path from "path";
 import { compileAndRunTS } from "./utils/compileAndRunTs.js";
 import { renderTemplateEngine } from "./utils/templateEngine.js";
 import chokidar from "chokidar";
+import { walkSync } from "./utils/walkSync.js";
 
 const PORT = 3000;
-
-/**
- * Walks thorugh a directory and finds all available paths
- *
- * @param dir Path to directory
- */
-function* walkSync(dir) {
-  const files = fs.readdirSync(dir, { withFileTypes: true });
-  for (const file of files) {
-    if (file.isDirectory()) {
-      yield* walkSync(path.join(dir, file.name));
-    } else {
-      yield path.join(dir, file.name);
-    }
-  }
-}
 
 export async function serveApp(params: ServeAppParams) {
   const { pagesDirectory, templateEngine, viewsDirectory } = params;
@@ -38,7 +22,11 @@ export async function serveApp(params: ServeAppParams) {
   });
 
   /* Initialize the template engine for the express app */
-  renderTemplateEngine(templateEngine, viewsDirectory, app);
+  renderTemplateEngine({
+    engine: templateEngine,
+    views: viewsDirectory,
+    app,
+  });
 
   /* Logic for file based routing */
   for (const filePath of walkSync(pagesDirectory)) {
@@ -55,23 +43,20 @@ export async function serveApp(params: ServeAppParams) {
 
     /* Format links from [param].ts to match :param */
     const basename = filePath.replace(pagesDirectory, "");
-    const routeQueryPath = basename.replaceAll("[", ":").replaceAll("].ts", "");
+    const routeQueryPath = basename
+      .replaceAll("[", ":")
+      .replaceAll("]", "")
+      .replaceAll(".ts", "");
 
     /* Create express route for each page */
-    app.get(routeQueryPath, (req, res, next) => {
-      /* Check if the current route exits in the generated paths */
-      const availablePaths = createPaths();
-      const routeExists = availablePaths.paths.find(
-        (item) =>
-          item.path.replace(/^\/|\/$/g, "") === req.path.replace(/^\/|\/$/g, "")
-      );
+    app.get(`${routeQueryPath}(*)?`, async (req, res, next) => {
+      /* Run createPage function and pass it the context */
+      const page = await createPage(req);
 
-      if (routeExists) {
-        /* Run createPage function and pass it the context */
-        const page = createPage(req);
+      /* Send to 404 if there is no data sent to template */
+      if (page?.context?.data) {
         res.render(page.context.template, page.context.data);
       } else {
-        /* If the route doesn't exist go to the 404 catch all route */
         next();
       }
     });
