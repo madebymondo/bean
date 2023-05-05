@@ -3,7 +3,7 @@ import fs from "fs-extra";
 import { walkSync } from "./walkSync.js";
 import { BeanConfig } from "@bean/core";
 import { compileAndRunTS } from "./compileAndRunTs.js";
-import { renderBuldTemplate } from "./templateEngine.js";
+import { renderBuildTemplate } from "./templateEngine.js";
 import chalk from "chalk";
 import { generateHTMLOutputPath } from "./generateHTMLOutputPath.js";
 
@@ -41,7 +41,7 @@ export async function buildStaticFiles(params: BuildSiteParams) {
 
       const { template, data } = page.context;
 
-      const generatedHTML = renderBuldTemplate({
+      const generatedHTML = renderBuildTemplate({
         engine: templateEngine,
         views,
         template,
