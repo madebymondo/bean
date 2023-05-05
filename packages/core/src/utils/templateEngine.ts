@@ -27,7 +27,7 @@ export function renderTemplateEngine(params: RenderTemplateEngineParams) {
 }
 
 /* Renders the template HTML for the SSG and pre-render build */
-export function renderBuldTemplate(params: RenderBuildTemplateParams) {
+export function renderBuildTemplate(params: RenderBuildTemplateParams) {
   const { engine, views, template, data } = params;
 
   switch (engine) {
