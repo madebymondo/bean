@@ -1,9 +1,9 @@
-import { generateServerTemplateParams} from "@bean/core";
+import { GenerateServerTemplateParams } from "@bean/core";
 
 /**
  * Generates the contents of the server template
  * */
-export function generateServerTemplate(params: generateServerTemplateParams) {
+export function generateServerTemplate(params: GenerateServerTemplateParams) {
   const { templateEngine, viewsDirectory, pagesDirectory, port } = params;
 
   const templateImports = `
