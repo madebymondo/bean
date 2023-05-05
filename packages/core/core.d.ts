@@ -82,4 +82,11 @@ declare module "@bean/core" {
     template: string;
     data: any;
   }
+
+  interface GenerateServerTemplateParams {
+    templateEngine: BeanConfig["templateEngine"];
+    pagesDirectory: BeanConfig["pagesDirectory"];
+    viewsDirectory: BeanConfig["viewsDirectory"];
+    port: number;
+  }
 }
