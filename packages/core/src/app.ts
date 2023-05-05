@@ -49,9 +49,9 @@ export async function serveApp(params: ServeAppParams) {
       .replaceAll(".ts", "");
 
     /* Create express route for each page */
-    app.get(`${routeQueryPath}(*)?`, (req, res, next) => {
+    app.get(`${routeQueryPath}(*)?`, async (req, res, next) => {
       /* Run createPage function and pass it the context */
-      const page = createPage(req);
+      const page = await createPage(req);
 
       /* Send to 404 if there is no data sent to template */
       if (page?.context?.data) {

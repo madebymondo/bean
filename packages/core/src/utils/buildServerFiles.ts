@@ -54,11 +54,11 @@ export async function buildServerFiles(params: BuildServerFilesParams) {
         console.log(chalk.blue(`Generating pre-rendered routes...`));
       }
 
-      pagesToPrerender?.forEach((prerenderedPage) => {
+      pagesToPrerender?.forEach(async (prerenderedPage) => {
         const prerenderedPageContext = {
           params: prerenderedPage,
         };
-        const { context } = createPage(prerenderedPageContext);
+        const { context } = await createPage(prerenderedPageContext);
         const { template, data } = context;
 
         const generatedHTML = renderBuildTemplate({

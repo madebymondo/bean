@@ -34,10 +34,10 @@ export async function buildStaticFiles(params: BuildSiteParams) {
 
     const allRoutePaths = createPaths().paths;
 
-    allRoutePaths.forEach((routeData) => {
+    allRoutePaths.forEach(async (routeData) => {
       const routeContext = { params: routeData };
 
-      const page = createPage(routeContext);
+      const page = await createPage(routeContext);
 
       const { template, data } = page.context;
 
