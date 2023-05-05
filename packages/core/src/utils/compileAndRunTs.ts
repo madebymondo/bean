@@ -8,7 +8,7 @@ import fs from "fs-extra";
  * @param options TypeScript configuration options
  * @returns
  */
-function tsCompile(
+export function tsCompile(
   source: string,
   options: ts.TranspileOptions = null
 ): string {
