@@ -4,9 +4,13 @@ import path from "path";
 import { compileAndRunTS } from "./utils/compileAndRunTs.js";
 import { renderTemplateEngine } from "./utils/templateEngine.js";
 import { walkSync } from "./utils/walkSync.js";
-import { beanConfigData } from "./cmd.js";
 
 const PORT = 3000;
+
+const beanConfigPath = path.join(process.cwd(), "bean.config.ts");
+const beanConfigFunctions = await compileAndRunTS(beanConfigPath);
+const beanConfig = beanConfigFunctions.find((func) => func.key === "default");
+export const beanConfigData = beanConfig.callback();
 
 const pagesDirectory = beanConfigData.pagesDirectory ?? "pages";
 const viewsDirectory = beanConfigData.viewsDirectory ?? "views";
