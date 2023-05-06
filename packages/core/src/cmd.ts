@@ -12,7 +12,8 @@ const program = new Command();
 const beanConfigPath = path.join(process.cwd(), "bean.config.ts");
 const beanConfigFunctions = await compileAndRunTS(beanConfigPath);
 const beanConfig = beanConfigFunctions.find((func) => func.key === "default");
-const { renderMode, buildOutputPath } = beanConfig.callback();
+export const beanConfigData = beanConfig.callback();
+export const { renderMode, buildOutputPath } = beanConfigData;
 
 const bean = new Bean(beanConfig.callback());
 
@@ -20,7 +21,20 @@ program
   .command("dev")
   .description("Starts development server for the Bean site")
   .action(async () => {
-    await bean.serve();
+    console.log(`Starting development server...`);
+    const serverProcess = exec(`nodemon ./node_modules/@bean/core/dist/app.js`);
+
+    serverProcess.stdout.on("data", (data) => {
+      console.log(chalk.blue(`[Server Process]: ${data.toString()}`));
+    });
+
+    serverProcess.stderr.on("data", (data) => {
+      console.error(chalk.red(`[Server Error]: ${data.toString()}`));
+    });
+
+    serverProcess.on("exit", (code) => {
+      console.log(chalk.blue(`[Server Exit]: ${code.toString()}`));
+    });
   });
 
 program
@@ -36,7 +50,7 @@ program
   .action(() => {
     console.log(`Starting server...`);
     const serverProcess = exec(
-      `node ${path.join(
+      `node --preserve-symlinks ${path.join(
         process.cwd(),
         buildOutputPath ? buildOutputPath : "dist",
         "server.js"

@@ -1,6 +1,5 @@
 import chalk from "chalk";
 import { BeanConfig } from "@bean/core";
-import { serveApp } from "./app.js";
 import { buildStaticFiles } from "./utils/buildStaticFiles.js";
 import { buildServerFiles } from "./utils/buildServerFiles.js";
 
@@ -34,19 +33,6 @@ export class Bean {
 
     this.paths = [];
   }
-
-  /**
-   *  Runs an Express server in dev
-   * */
-  async serve() {
-    await serveApp({
-      pagesDirectory: this.pagesDirectory,
-      viewsDirectory: this.viewsDirectory,
-      watchTargets: this.watchTargets,
-      templateEngine: this.templateEngine,
-    });
-  }
-
   /**
    *   Builds an output of files
    * */
