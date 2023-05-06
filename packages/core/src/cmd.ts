@@ -22,7 +22,14 @@ program
   .description("Starts development server for the Bean site")
   .action(async () => {
     console.log(`Starting development server...`);
-    const serverProcess = exec(`nodemon ./node_modules/@bean/core/dist/app.js`);
+
+    /* Run the development server file */
+    const devSeverPath = `${path.join(
+      process.cwd(),
+      "/node_modules/@bean/core/dist/app.js"
+    )}`;
+
+    const serverProcess = exec(`node ${devSeverPath}`);
 
     serverProcess.stdout.on("data", (data) => {
       console.log(chalk.blue(`[Server Process]: ${data.toString()}`));
