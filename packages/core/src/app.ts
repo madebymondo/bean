@@ -28,6 +28,16 @@ export async function serveApp(params: ServeAppParams) {
     app,
   });
 
+  /* Redirect if path has a trailing slash */
+  app.use(function (req, res, next) {
+    if (req.path.substr(-1) == "/" && req.path.length > 1) {
+      let query = req.url.slice(req.path.length);
+      res.redirect(301, req.path.slice(0, -1) + query);
+    } else {
+      next();
+    }
+  });
+
   /* Logic for file based routing */
   for (const filePath of walkSync(pagesDirectory)) {
     const pageContentPath = path.join(process.cwd(), filePath);
@@ -52,6 +62,7 @@ export async function serveApp(params: ServeAppParams) {
     app.get(`${routeQueryPath}(*)?`, async (req, res, next) => {
       /* Run createPage function and pass it the context */
       const page = await createPage(req);
+      console.log(routeQueryPath, page);
 
       /* Send to 404 if there is no data sent to template */
       if (page?.context?.data) {
