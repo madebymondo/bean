@@ -73,6 +73,10 @@ declare module "@bean/core" {
   interface RenderTemplateEngineParams {
     engine: BeanConfig["templateEngine"];
     views: BeanConfig["viewsDirectory"];
+    /** Template file to parse */
+    template: string;
+    /** Page data sent to render function */
+    data: { any };
     app: Express;
   }
 
