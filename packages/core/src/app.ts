@@ -19,13 +19,6 @@ const watchTargets = beanConfigData.watchTargets ?? [];
 
 const app = express();
 
-/* Initialize the template engine for the express app */
-renderTemplateEngine({
-  engine: templateEngine,
-  views: viewsDirectory,
-  app,
-});
-
 /* Logic for file based routing */
 for (const filePath of walkSync(pagesDirectory)) {
   const pageContentPath = path.join(process.cwd(), filePath);
@@ -51,9 +44,24 @@ for (const filePath of walkSync(pagesDirectory)) {
     /* Run createPage function and pass it the context */
     const page = await createPage(req);
 
+    const template = renderTemplateEngine({
+      engine: templateEngine,
+      views: viewsDirectory,
+      template: page.context.template,
+      data: page.context.data,
+      app,
+    });
+
+    /* Add the Browser Sync refresh client to the generated HTML */
+    const outputHTML = template.replace(
+      "</body>",
+      `${BROWSER_SYNC_CLIENT}</body>`
+    );
+
     /* Send to 404 if there is no data sent to template */
     if (page?.context?.data) {
-      res.render(page.context.template, page.context.data);
+      res.setHeader("Content-Type", "text/html");
+      res.send(outputHTML);
     } else {
       next();
     }
@@ -67,3 +75,20 @@ app.get("*", (req, res, next) => {
 });
 
 app.listen(PORT, () => console.log(chalk.green(`Server started on: ${PORT}`)));
+
+const BROWSER_SYNC_CLIENT = `<script id="__bs_script__">//<![CDATA[
+  (function() {
+  try {
+  var script = document.createElement('script');
+  if ('async') {
+      script.async = true;
+  }
+  script.src = 'http://HOST:3001/browser-sync/browser-sync-client.js?v=2.29.1'.replace("HOST", location.hostname);
+  if (document.body) {
+      document.body.appendChild(script);
+  }
+  } catch (e) {
+  console.error("Browsersync: could not append script tag", e);
+  }
+})()
+//]]></script>`;
