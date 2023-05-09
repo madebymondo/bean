@@ -21,7 +21,10 @@ export function createPage(ctx): CreatePageParams {
     context: {
       slug,
       template: "base.njk",
-      data: pages.find((page) => page.slug === slug),
+      data: pages.find((page) => {
+        let pageSlug = slug ? slug : "/";
+        return pageSlug === page.slug;
+      }),
     },
   };
 }
