@@ -5,26 +5,32 @@ declare module "@bean/core" {
    * Configuration options for .bean.json
    */
   interface BeanConfig {
+    /** Base directory for the project (defaults to: 'src') */
+    baseDirectory: string;
     /**
-     *  Directory for all file based routing
+     *  Directory for all file based routing relative to the base
      * */
     pagesDirectory?: string;
     /**
-   *  An array of paths that will be automatically 
-  passedthrough during the build 
-  */
-    passthroughDirectories?: string[];
-    /**
-     * Directory for templates and views
+     * Directory for templates and views relative to the base
      */
     viewsDirectory?: string;
     /**
-     * Directories and files to watch for server and frontend updates
+     *  An array of paths that will be automatically
+     * passed through during the build relative to project root
      */
-    watchTargets: string[];
-    /** 
-   Output path for the site 
-   */
+    passthroughDirectories?: string[];
+    /**
+     * Directories and files relative to the base to watch for frontend updates
+     */
+    watchTargets?: string[];
+    /**
+     * Watch targets relative to the base for server updates
+     */
+    serverWatchTargets?: string[];
+    /**
+     * Output path for the site relative to project root
+     */
     buildOutputPath?: string;
     /**
      *  Rendering mode for the site
