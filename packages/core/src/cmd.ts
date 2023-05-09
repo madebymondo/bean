@@ -6,6 +6,7 @@ import { Command } from "commander";
 import path from "path";
 import { exec } from "child_process";
 import chalk from "chalk";
+import bs from "browser-sync";
 
 const program = new Command();
 
@@ -29,7 +30,21 @@ program
       "/node_modules/@bean/core/dist/app.js"
     )}`;
 
-    const serverProcess = exec(`node ${devSeverPath}`);
+    const serverProcess = exec(
+      `npx nodemon --watch 'src/**/*' -e ts,tsx,js,jsx,css,scss,njk ${devSeverPath}`
+    );
+
+    bs.init({
+      proxy: "http://localhost:3000",
+      port: 3001,
+      open: true,
+      notify: true,
+      watchOptions: {
+        ignoreInitial: true,
+      },
+      files: ["**/*.js", "**/*.ts", "**/*.njk"],
+      logSnippet: false,
+    });
 
     serverProcess.stdout.on("data", (data) => {
       console.log(chalk.blue(`[Server Process]: ${data.toString()}`));
