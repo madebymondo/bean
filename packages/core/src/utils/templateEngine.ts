@@ -7,14 +7,15 @@ import {
 
 /* Setup the template engine for an express app */
 export function renderTemplateEngine(params: RenderTemplateEngineParams) {
-  const { engine, views, app } = params;
+  const { engine, views, template, data, app } = params;
 
   switch (engine) {
     case "njk":
-      return nunjucks.configure(views, {
+      nunjucks.configure(views, {
         autoescape: true,
         express: app,
       });
+      return nunjucks.render(template, data);
     case "preact":
       console.log("render preact");
     default:
