@@ -12,10 +12,15 @@ const beanConfigFunctions = await compileAndRunTS(beanConfigPath);
 const beanConfig = beanConfigFunctions.find((func) => func.key === "default");
 export const beanConfigData = beanConfig.callback();
 
-const pagesDirectory = beanConfigData.pagesDirectory ?? "pages";
-const viewsDirectory = beanConfigData.viewsDirectory ?? "views";
+const { baseDirectory } = beanConfigData;
+
+const pagesDirectory = beanConfigData.pagesDirectory
+  ? path.join(baseDirectory, beanConfigData.pagesDirectory)
+  : "src/pages";
+const viewsDirectory = beanConfigData.viewsDirectory
+  ? path.join(baseDirectory, beanConfigData.viewsDirectory)
+  : "src/views";
 const templateEngine = beanConfigData.templateEngine ?? "njk";
-const watchTargets = beanConfigData.watchTargets ?? [];
 
 const app = express();
 
@@ -24,12 +29,9 @@ for (const filePath of walkSync(pagesDirectory)) {
   const pageContentPath = path.join(process.cwd(), filePath);
   const pageContent = await compileAndRunTS(pageContentPath);
 
-  /* Get the createPage and createPaths callback */
+  /* Get the createPage callback */
   const createPage = pageContent.find(
     (item) => item.key === "createPage"
-  )?.callback;
-  const createPaths = pageContent.find(
-    (item) => item.key === "createPaths"
   )?.callback;
 
   /* Format links from [param].ts to match :param */
