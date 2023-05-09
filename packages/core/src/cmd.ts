@@ -14,7 +14,15 @@ const beanConfigPath = path.join(process.cwd(), "bean.config.ts");
 const beanConfigFunctions = await compileAndRunTS(beanConfigPath);
 const beanConfig = beanConfigFunctions.find((func) => func.key === "default");
 export const beanConfigData = beanConfig.callback();
-export const { renderMode, buildOutputPath } = beanConfigData;
+export const {
+  baseDirectory,
+  renderMode,
+  buildOutputPath,
+  watchTargets,
+  serverWatchTargets,
+  viewsDirectory,
+  pagesDirectory,
+} = beanConfigData;
 
 const bean = new Bean(beanConfig.callback());
 
@@ -30,19 +38,26 @@ program
       "/node_modules/@bean/core/dist/app.js"
     )}`;
 
+    /* Live reload configuration */
+    const nodemonWatchTargets = serverWatchTargets
+      ? serverWatchTargets.join(",")
+      : baseDirectory;
+
     const serverProcess = exec(
-      `npx nodemon --watch 'src/**/*' -e ts,tsx,js,jsx,css,scss,njk ${devSeverPath}`
+      `npx nodemon --watch ${nodemonWatchTargets} -e ts,tsx,js,jsx,css,scss,njk ${devSeverPath}`
     );
 
     bs.init({
       proxy: "http://localhost:3000",
       port: 3001,
-      open: true,
+      open: false,
       notify: true,
       watchOptions: {
         ignoreInitial: true,
       },
-      files: ["**/*.js", "**/*.ts", "**/*.njk"],
+      files: watchTargets
+        ? watchTargets
+        : ["**/*.js", "**/*.ts", "**/*.njk", "**/*.scss", "**/*.css"],
       logSnippet: false,
     });
 
