@@ -2,9 +2,10 @@ import { BeanConfig } from "@bean/core";
 
 export default function config(): BeanConfig {
   return {
-    pagesDirectory: "src/pages",
-    viewsDirectory: "src/views",
-    watchTargets: ["src/**/*"],
+    baseDirectory: "src",
+    pagesDirectory: "pages",
+    viewsDirectory: "views",
+    watchTargets: ["**/*"],
     renderMode: "server",
   };
 }

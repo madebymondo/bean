@@ -8,10 +8,10 @@
     "dev": "bean dev",
     "build": "bean build"
   },
-  "dependencies": {
-    "@bean/core": "file:../packages/core"
-  },
   "keywords": [],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@bean/core": "^0.0.1"
+  }
 }

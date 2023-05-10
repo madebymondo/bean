@@ -46,18 +46,20 @@ export async function compileAndRunTS(path: string): Promise<any> {
   Import the file contents with top level await and 
   return the values of each function in the file. 
   */
-  fs.writeFileSync(convertedJSPath, transpiledFile);
+  try {
+    await fs.writeFile(convertedJSPath, transpiledFile);
+    const importedJSFile = await import(convertedJSPath);
+    const functionsToRun = Object.keys(importedJSFile).map(async (key) => {
+      return { key, callback: await importedJSFile[key] };
+    });
 
-  const importedJSFile = await import(convertedJSPath);
+    const content = await Promise.all(functionsToRun);
 
-  const functionsToRun = Object.keys(importedJSFile).map(async (key) => {
-    return { key, callback: await importedJSFile[key] };
-  });
+    /* Remove the temp .js file after getting the content */
+    await fs.unlink(convertedJSPath);
 
-  const content = await Promise.all(functionsToRun);
-
-  /* Remove the temp .js file after getting the content */
-  fs.unlinkSync(convertedJSPath);
-
-  return content;
+    return content;
+  } catch (e) {
+    console.error(e);
+  }
 }

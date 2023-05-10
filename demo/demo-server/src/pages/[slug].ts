@@ -4,7 +4,7 @@ const pages = [
   { slug: "/", title: "Homepage" },
   {
     slug: "about",
-    title: "Server About Page",
+    title: `Server About Page`,
   },
   {
     slug: "work",
@@ -14,12 +14,17 @@ const pages = [
 ];
 
 export function createPage(ctx): CreatePageParams {
-  const slug = ctx.params.slug;
+  const slug = ctx.params.slug.endsWith("/")
+    ? ctx.params.slug.slice(0, -1)
+    : ctx.params.slug;
   return {
     context: {
       slug,
       template: "base.njk",
-      data: pages.find((page) => page.slug === slug),
+      data: pages.find((page) => {
+        let pageSlug = slug ? slug : "/";
+        return pageSlug === page.slug;
+      }),
     },
   };
 }
