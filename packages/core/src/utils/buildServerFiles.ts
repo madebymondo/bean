@@ -6,6 +6,18 @@ import { compileAndRunTS, tsCompile } from "./compileAndRunTs.js";
 import { renderBuildTemplate } from "./templateEngine.js";
 import chalk from "chalk";
 import { generateHTMLOutputPath } from "./generateHTMLOutputPath.js";
+<<<<<<< HEAD
+=======
+import { generateServerTemplate } from "../templates/templateServer.js";
+
+interface BuildServerFilesParams {
+  pagesDirectory: BeanConfig["pagesDirectory"];
+  outputPath: BeanConfig["buildOutputPath"];
+  templateEngine: BeanConfig["templateEngine"];
+  views: BeanConfig["viewsDirectory"];
+  publicPath: BeanConfig["publicPath"];
+}
+>>>>>>> d1e2a9b (feat: integrate pubilcPath to server static assets)
 
 /**
  * Creates the server.js, manifest and generates
