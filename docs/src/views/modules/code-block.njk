@@ -1,4 +1,4 @@
-<figure class="code-block">
+<figure class="code-block" {% if module.id %} id="{{module.id}}"{% endif %}>
     {% if module.filename %}
         <figcaption class="code-block__filename">{{module.filename}}</figcaption>
     {% endif %}

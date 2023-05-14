@@ -1,4 +1,4 @@
-<section class="single-column">
-    <h2>{{module.headline}}</h2>
-    <div>{{module.content}}</div>
+<section class="single-column" {% if module.id %} id="{{module.id}}"{% endif %}>
+    <h2 class="single-column__headline">{{module.headline}}</h2>
+    <div class="single-column__body">{{module.content}}</div>
 </section>
