@@ -23,3 +23,7 @@
 body {
   @include type.body;
 }
+
+p {
+  max-width: 75ch;
+}
