@@ -1,9 +1,14 @@
+@use "utils/layout";
+@use "utils/helpers";
+
 .code-block {
-  --code-block-font-size: 14px;
+  @include helpers.push-auto;
+  --code-block-font-size: 16px;
+  @include layout.container;
   position: relative;
-  margin: 0;
+  margin-top: 0;
   width: 100%;
-  max-width: 750px;
+  max-width: 700px;
 }
 
 .code-block__filename {
@@ -15,7 +20,7 @@
   width: fit-content;
   background: #2e3440;
   color: #f8f8f2;
-  font-size: var(--code-block-font-size);
+  font-size: 12px;
 }
 
 pre.code-block__pre {
