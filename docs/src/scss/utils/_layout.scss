@@ -1,0 +1,71 @@
+@use "utils/tokens";
+@use "utils/breakpoints";
+
+@mixin container {
+  --status: #{tokens.$grid-mobile-label};
+  --grid-outer-padding: #{tokens.$grid-mobile-padding};
+  --grid-container-max-width: #{tokens.$grid-mobile-max-width};
+  max-width: var(--grid-container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--grid-outer-padding);
+  padding-right: var(--grid-outer-padding);
+
+  @include breakpoints.tablet {
+    --status: #{tokens.$grid-tablet-label};
+    --grid-outer-padding: #{tokens.$grid-tablet-padding};
+    --grid-container-max-width: #{tokens.$grid-tablet-max-width};
+  }
+
+  @include breakpoints.laptop {
+    --status: #{tokens.$grid-laptop-label};
+    --grid-outer-padding: #{tokens.$grid-laptop-padding};
+    --grid-container-max-width: #{tokens.$grid-laptop-max-width};
+  }
+
+  @include breakpoints.desktop {
+    --status: #{tokens.$grid-desktop-label};
+    --grid-outer-padding: #{tokens.$grid-desktop-padding};
+    --grid-container-max-width: #{tokens.$grid-desktop-max-width};
+  }
+}
+
+@mixin grid {
+  --status: #{tokens.$grid-mobile-label};
+  --grid-column-count: #{tokens.$grid-mobile-columns};
+  --grid-column-gap: #{tokens.$grid-mobile-gap};
+  --grid-outer-padding: #{tokens.$grid-mobile-padding};
+  --grid-container-max-width: #{tokens.$grid-mobile-max-width};
+  display: grid;
+  grid-template-columns: repeat(var(--grid-column-count), 1fr);
+  grid-gap: var(--grid-column-gap);
+  max-width: var(--grid-container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--grid-outer-padding);
+  padding-right: var(--grid-outer-padding);
+
+  @include breakpoints.tablet {
+    --status: #{tokens.$grid-tablet-label};
+    --grid-column-count: #{tokens.$grid-tablet-columns};
+    --grid-column-gap: #{tokens.$grid-tablet-gap};
+    --grid-outer-padding: #{tokens.$grid-tablet-padding};
+    --grid-container-max-width: #{tokens.$grid-tablet-max-width};
+  }
+
+  @include breakpoints.laptop {
+    --status: #{tokens.$grid-laptop-label};
+    --grid-column-count: #{tokens.$grid-laptop-columns};
+    --grid-column-gap: #{tokens.$grid-laptop-gap};
+    --grid-outer-padding: #{tokens.$grid-laptop-padding};
+    --grid-container-max-width: #{tokens.$grid-laptop-max-width};
+  }
+
+  @include breakpoints.desktop {
+    --status: #{tokens.$grid-desktop-label};
+    --grid-column-count: #{tokens.$grid-desktop-columns};
+    --grid-column-gap: #{tokens.$grid-desktop-gap};
+    --grid-outer-padding: #{tokens.$grid-desktop-padding};
+    --grid-container-max-width: #{tokens.$grid-desktop-max-width};
+  }
+}
