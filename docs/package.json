@@ -11,7 +11,8 @@
     "build:sass": "sass --load-path=src/scss src/scss:dist/public/css",
     "watch:scripts": "esbuild src/ts/*.ts --bundle --outdir=public/js --watch",
     "build:scripts": "esbuild src/ts/*.ts --bundle --outdir=dist/public/js",
-    "build:bean": "bean build"
+    "build:bean": "bean build",
+    "tokens": "node ./scripts/generateTokens.js src/scss/utils/_tokens.scss"
   },
   "keywords": [],
   "author": "",
