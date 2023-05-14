@@ -1,4 +1,18 @@
+{% import 'macros/button.njk' as buttonMacro with context %}
+
 <section class="single-column" {% if module.id %} id="{{module.id}}"{% endif %}>
     <h2 class="single-column__headline">{{module.headline}}</h2>
     <div class="single-column__body">{{module.content}}</div>
+    {% if module.buttons %}
+        <div class="single-column__buttons">
+            {% for button in module.buttons %}
+                {{buttonMacro.render({
+                    label: button.label, 
+                    url:button.url,
+                    class: 'single-column__buttons__button',
+                    variant: 'cta'
+                })}}
+            {% endfor %}
+        </div>
+    {% endif %}
 </section>
