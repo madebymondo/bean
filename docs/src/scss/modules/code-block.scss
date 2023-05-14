@@ -1,0 +1,20 @@
+.code-block {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  max-width: 750px;
+}
+
+.code-block__filename {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-top-left-radius: 0.5em;
+  color: white;
+  padding: 5px 10px;
+}
+
+.code-block__pre__code {
+  display: block;
+  font-size: 12px;
+}
