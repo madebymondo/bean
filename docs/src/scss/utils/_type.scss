@@ -1,6 +1,13 @@
+@use "utils/tokens";
+
 @mixin type($size, $line-height, $letter-spacing: 0, $font-weight: 400) {
   font-size: $size;
   font-weight: $font-weight;
   line-height: $line-height;
   letter-spacing: $letter-spacing;
+}
+
+@mixin body {
+  @include type(1rem, 1.5, 0.1px);
+  font-family: tokens.$font-family-text;
 }
