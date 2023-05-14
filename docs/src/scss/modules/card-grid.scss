@@ -1,0 +1,32 @@
+@use "utils/breakpoints";
+@use "utils/layout";
+@use "utils/type";
+
+.card-grid {
+  @include layout.grid;
+}
+
+.card-grid__content {
+  grid-column: 1 / -1;
+  text-align: center;
+
+  @include breakpoints.desktop {
+    grid-column: 1 / 4;
+    text-align: left;
+  }
+}
+
+.card-grid__cards {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-gap: 20px;
+
+  @include breakpoints.laptop {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 40px;
+  }
+
+  @include breakpoints.desktop {
+    grid-column: 4 / -1;
+  }
+}
