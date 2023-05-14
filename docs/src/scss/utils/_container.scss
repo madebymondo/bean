@@ -1,0 +1,42 @@
+@use "utils/tokens";
+@use "utils/breakpoints";
+
+@mixin grid {
+  --status: #{grid-mobile-label};
+  --grid-column-count: #{grid-mobile-columns};
+  --grid-column-gap: #{grid-mobile-gap};
+  --grid-outer-padding: #{grid-mobile-padding};
+  --grid-container-max-width: #{grid-mobile-max-width};
+  display: grid;
+  grid-template-columns: repeat(var(--grid-column-count), 1fr);
+  grid-gap: var(--grid-column-gap);
+  max-width: var(--grid-container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--grid-outer-padding);
+  padding-right: var(--grid-outer-padding);
+
+  @include breakpoints.tablet {
+    --status: #{grid-tablet-label};
+    --grid-column-count: #{grid-tablet-columns};
+    --grid-column-gap: #{grid-tablet-gap};
+    --grid-outer-padding: #{grid-tablet-padding};
+    --grid-container-max-width: #{grid-tablet-max-width};
+  }
+
+  @include breakpoints.laptop {
+    --status: #{grid-laptop-label};
+    --grid-column-count: #{grid-laptop-columns};
+    --grid-column-gap: #{grid-laptop-gap};
+    --grid-outer-padding: #{grid-laptop-padding};
+    --grid-container-max-width: #{grid-laptop-max-width};
+  }
+
+  @include breakpoints.laptop {
+    --status: #{grid-desktop-label};
+    --grid-column-count: #{grid-desktop-columns};
+    --grid-column-gap: #{grid-desktop-gap};
+    --grid-outer-padding: #{grid-desktop-padding};
+    --grid-container-max-width: #{grid-desktop-max-width};
+  }
+}

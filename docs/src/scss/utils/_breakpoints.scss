@@ -1,0 +1,37 @@
+@use "utils/tokens";
+
+@mixin breakpoint($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin phone {
+  @include breakpoint(tokens.$bp-phone) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @include breakpoint(tokens.$bp-tablet) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @include breakpoint(tokens.$bp-laptop) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @include breakpoint(tokens.$bp-desktop) {
+    @content;
+  }
+}
+
+@mixin ultra-wide {
+  @include breakpoint(tokens.$bp-ultra-wide) {
+    @content;
+  }
+}
