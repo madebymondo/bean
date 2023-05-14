@@ -1,0 +1,12 @@
+@use "utils/breakpoints";
+@use "utils/layout";
+@use "utils/type";
+
+.single-column {
+  @include layout.container;
+  text-align: center;
+}
+
+.single-column__headline {
+  margin-bottom: 12px;
+}
