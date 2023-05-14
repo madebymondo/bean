@@ -100,6 +100,7 @@ declare module "@bean/core" {
     pagesDirectory: BeanConfig["pagesDirectory"];
     viewsDirectory: BeanConfig["viewsDirectory"];
     buildPath: BeanConfig["buildOutputPath"];
+    server: BeanConfig["server"];
     port: number;
   }
 }

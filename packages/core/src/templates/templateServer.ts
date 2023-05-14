@@ -1,11 +1,18 @@
 import { GenerateServerTemplateParams } from "@bean/core";
+import express from "express";
 
 /**
  * Generates the contents of the server template
  * */
 export function generateServerTemplate(params: GenerateServerTemplateParams) {
-  const { templateEngine, viewsDirectory, pagesDirectory, buildPath, port } =
-    params;
+  const {
+    templateEngine,
+    viewsDirectory,
+    pagesDirectory,
+    buildPath,
+    port,
+    server,
+  } = params;
 
   const templateImports = `
     import express from "express";

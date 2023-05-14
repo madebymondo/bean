@@ -16,6 +16,7 @@ export class Bean {
   passthroughDirectories: BeanConfig["passthroughDirectories"];
   renderMode: BeanConfig["renderMode"];
   templateEngine: BeanConfig["templateEngine"];
+  server: BeanConfig["server"];
 
   constructor(config: BeanConfig) {
     /* Configuration */
@@ -30,6 +31,7 @@ export class Bean {
     this.passthroughDirectories = config.passthroughDirectories || [];
 
     this.templateEngine = config.templateEngine || "njk";
+    this.server = config.server;
 
     this.paths = [];
   }
@@ -51,6 +53,7 @@ export class Bean {
           pagesDirectory: this.pagesDirectory,
           outputPath: this.buildOutputPath,
           views: this.viewsDirectory,
+          server: this.server,
         });
       default:
         throw new Error(

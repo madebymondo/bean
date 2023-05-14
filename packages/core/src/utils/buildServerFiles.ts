@@ -13,6 +13,7 @@ interface BuildServerFilesParams {
   outputPath: BeanConfig["buildOutputPath"];
   templateEngine: BeanConfig["templateEngine"];
   views: BeanConfig["viewsDirectory"];
+  server: BeanConfig["server"];
 }
 
 /**
@@ -20,7 +21,7 @@ interface BuildServerFilesParams {
  * HTML for all pre-rendered routes
  */
 export async function buildServerFiles(params: BuildServerFilesParams) {
-  const { pagesDirectory, outputPath, templateEngine, views } = params;
+  const { pagesDirectory, outputPath, templateEngine, views, server } = params;
 
   const viewsPath = path.join(process.cwd(), views);
   const pagesPath = path.join(process.cwd(), pagesDirectory);
@@ -133,6 +134,7 @@ export async function buildServerFiles(params: BuildServerFilesParams) {
     viewsDirectory: viewsPath,
     buildPath: buildPath,
     templateEngine,
+    server,
     port: 3000,
   });
 
