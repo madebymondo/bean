@@ -1,0 +1,25 @@
+@use "utils/type";
+
+@font-face {
+  font-family: "Neue Machina Regular";
+  src: local("Neue Machina Regular"),
+    url("/public/fonts/PPNeueMachina-PlainRegular.woff2") format("woff2"),
+    url("/public/fonts/PPNeueMachina-PlainRegular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Neue Machina Medium";
+  src: local("Neue Machina Medium"),
+    url("/public/fonts/PPNeueMachina-PlainMedium.woff2") format("woff2"),
+    url("/public/fonts/PPNeueMachina-PlainMedium.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Mori";
+  src: local("Mori"), url("/public/fonts/PPMori-Regular.woff2") format("woff2"),
+    url("/public/fonts/PPMori-Regular.woff") format("woff");
+}
+
+body {
+  @include type.body;
+}
