@@ -12,7 +12,7 @@ const beanConfigFunctions = await compileAndRunTS(beanConfigPath);
 const beanConfig = beanConfigFunctions.find((func) => func.key === "default");
 export const beanConfigData = beanConfig.callback();
 
-const { baseDirectory } = beanConfigData;
+const { baseDirectory, server } = beanConfigData;
 
 const pagesDirectory = beanConfigData.pagesDirectory
   ? path.join(baseDirectory, beanConfigData.pagesDirectory)
@@ -23,6 +23,8 @@ const viewsDirectory = beanConfigData.viewsDirectory
 const templateEngine = beanConfigData.templateEngine ?? "njk";
 
 const app = express();
+
+server(app);
 
 /* Logic for file based routing */
 for (const filePath of walkSync(pagesDirectory)) {
