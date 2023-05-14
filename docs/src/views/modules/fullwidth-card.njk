@@ -1,0 +1,11 @@
+{% import 'macros/card.njk' as cardMacro with context %}
+
+<section class="fullwidth-card" {% if module.id %} id="{{module.id}}"{% endif %} >
+    {{cardMacro.render({
+        title: module.title,
+        content: module.content,
+        button: module.button,
+        class: module.class,
+        variant: 'fullwidth'
+    })}}
+</section>
