@@ -1,4 +1,5 @@
 @use "utils/breakpoints";
+@use "utils/helpers";
 @use "utils/layout";
 @use "utils/type";
 
@@ -9,4 +10,13 @@
 
 .single-column__headline {
   margin-bottom: 12px;
+}
+
+.single-column__body {
+  @include helpers.push-auto;
+  max-width: 75ch;
+}
+
+.single-column__buttons {
+  margin-top: 20px;
 }
