@@ -16,6 +16,12 @@
   }
 }
 
+.card-grid__headline {
+  @include breakpoints.desktop {
+    @include type.h3;
+  }
+}
+
 .card-grid__cards {
   grid-column: 1 / -1;
   display: grid;
