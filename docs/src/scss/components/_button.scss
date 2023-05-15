@@ -1,0 +1,58 @@
+@use "utils/tokens";
+@use "utils/type";
+
+.button {
+  --button-border-color: #{tokens.$color-orange-500};
+  --button-border-radius: 10px 0 10px 0;
+  --button-color: #{tokens.$color-orange-500};
+  --button-background: #{tokens.$color-white-200};
+  --button-padding: 5px 10px;
+
+  padding: var(--button-padding);
+  text-decoration: none;
+  border-radius: var(--button-border-radius);
+  border: 1px solid var(--button-border-color);
+  background: var(--button-background);
+  color: var(--button-color);
+  width: fit-content;
+  position: relative;
+  display: block;
+
+  &:hover {
+    --button-background: #{tokens.$color-green-300};
+    --button-border-color: #{tokens.$color-green-400};
+    --button-color: #{tokens.$color-white-200};
+  }
+}
+
+.button[data-variant="cta"] {
+  padding: 10px 20px;
+  font-size: 1.15rem;
+
+  &::after {
+    --button-psudeo-top: 3px;
+    --button-psudeo-left: 3px;
+
+    content: "";
+    position: absolute;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    top: var(--button-psudeo-top);
+    left: var(--button-psudeo-left);
+    background: var(--button-border-color);
+    border-radius: var(--button-border-radius);
+    transition: all 0.1s tokens.$easing-in-out-quad;
+  }
+
+  &:hover {
+    &::after {
+      --button-psudeo-top: 6px;
+      --button-psudeo-left: 6px;
+    }
+  }
+}
+
+.button[data-variant="inline"] {
+  padding: 0;
+}
