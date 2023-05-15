@@ -5,8 +5,10 @@
     class="card {%- if params.class %} {{params.class}}{% endif -%}" 
     {% if params.variant %}data-variant="{{params.variant}}"{% endif %}
     >
-        <div class="card__title">{{params.title}}</div>
-        <div class="card__content">{{params.content}}</div>
+        <div class="card__main">
+            <div class="card__title">{{params.title}}</div>
+            <div class="card__content">{{params.content}}</div>
+        </div>
 
         {% if params.button %}
             {{buttonMacro.render(params.button)}}
