@@ -1,0 +1,5 @@
+@use "utils/tokens";
+
+body {
+  background: tokens.$color-white-200;
+}
