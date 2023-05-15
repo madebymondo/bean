@@ -43,7 +43,7 @@ modules:
           Ship your site with no JS or throw the kitchen
           sink at it. The choice is yours
         button:
-          label: Learn about configuration
+          label: Learn configuration
           url: /configuration
       - title: Get content from anywhere
         content: |
@@ -51,16 +51,16 @@ modules:
           data can be stored can be integrated into a
           Bean site.
         button:
-          label: Learn about integrations
+          label: Learn integrations
           url: /integrations
       - title: Scale gracefully
         content: |
           Whether you site is a single landing page
-          to a thousands of pages. Bean's render modes
+          or thousands of pages. Bean's render modes
           allows you to always give users the best possible 
           experience.
         button:
-          label: Learn about render modes
+          label: Learn render modes
           url: /render-modes
 
   - type: spacer
