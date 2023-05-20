@@ -20,6 +20,10 @@ declare module "@bean/core" {
      */
     passthroughDirectories?: string[];
     /**
+     * Directory for global data files relative to the base
+     */
+    dataDirectory?: string;
+    /**
      * Directories and files relative to the base to watch for frontend updates
      */
     watchTargets?: string[];
@@ -113,6 +117,7 @@ declare module "@bean/core" {
 
   interface BuildSiteParams {
     pagesDirectory: BeanConfig["pagesDirectory"];
+    dataDirectory: BeanConfig["dataDirectory"];
     outputPath: BeanConfig["buildOutputPath"];
     templateEngine: BeanConfig["templateEngine"];
     views: BeanConfig["viewsDirectory"];
@@ -122,6 +127,7 @@ declare module "@bean/core" {
   interface BuildServerFilesParams {
     pagesDirectory: BeanConfig["pagesDirectory"];
     outputPath: BeanConfig["buildOutputPath"];
+    dataDirectory: BeanConfig["dataDirectory"];
     templateEngine: BeanConfig["templateEngine"];
     views: BeanConfig["viewsDirectory"];
     server: BeanConfig["server"];
