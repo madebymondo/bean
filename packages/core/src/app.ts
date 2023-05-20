@@ -1,9 +1,10 @@
 import chalk from "chalk";
 import express from "express";
-import path from "path";
+import path, { basename } from "path";
 import { compileAndRunTS } from "./utils/compileAndRunTs.js";
 import { renderTemplateEngine } from "./utils/templateEngine.js";
 import { walkSync } from "./utils/walkSync.js";
+import fs from "fs-extra";
 
 const PORT = 3000;
 
@@ -16,13 +17,41 @@ const { baseDirectory, server, templateFilters } = beanConfigData;
 
 const pagesDirectory = beanConfigData.pagesDirectory
   ? path.join(baseDirectory, beanConfigData.pagesDirectory)
-  : "src/pages";
+  : path.join(process.cwd(), "src/pages");
 const viewsDirectory = beanConfigData.viewsDirectory
   ? path.join(baseDirectory, beanConfigData.viewsDirectory)
-  : "src/views";
+  : path.join(process.cwd(), "src/views");
 const templateEngine = beanConfigData.templateEngine ?? "njk";
 
+const globalDataDirectory = beanConfigData.globalDataDirectory
+  ? path.join(baseDirectory, beanConfigData.globalDataDirectory)
+  : path.join(process.cwd(), "src/data");
+
 const app = express();
+
+/* Set global data for app */
+const globalDataFiles = fs.readdirSync(globalDataDirectory);
+
+for (const dataFile of globalDataFiles) {
+  /* Read each data file and get it's default exported function */
+  const dataFileFunctions = await compileAndRunTS(
+    path.join(globalDataDirectory, dataFile)
+  );
+  const dataFileContents = dataFileFunctions.find(
+    (func) => func.key === "default"
+  );
+
+  /* Get the name of the file and the return value
+    of the callback */
+  const dataBasename = dataFile
+    .replace(globalDataDirectory, "")
+    .replace(".js", "")
+    .replace(".ts", "");
+
+  const data = await dataFileContents.callback();
+
+  app.locals[dataBasename] = data;
+}
 
 server(app);
 
@@ -52,7 +81,8 @@ for (const filePath of walkSync(pagesDirectory)) {
       engine: templateEngine,
       views: viewsDirectory,
       template: page.context.template,
-      data: page.context.data,
+      /* Set data to values from createPage and the global data */
+      data: { ...page.context.data, ...req.app.locals },
       filters: templateFilters,
       app,
     });

@@ -18,16 +18,21 @@ export class Bean {
   templateEngine: BeanConfig["templateEngine"];
   server: BeanConfig["server"];
   templateFilters: BeanConfig["templateFilters"];
+  dataDirectory: BeanConfig["dataDirectory"];
 
   constructor(config: BeanConfig) {
     /* Configuration */
     this.baseDirectory = config.baseDirectory;
     this.pagesDirectory = config.pagesDirectory
       ? path.join(this.baseDirectory, config.pagesDirectory)
-      : "src/pages";
+      : path.join(process.cwd(), "src/pages");
     this.viewsDirectory = config.viewsDirectory
       ? path.join(this.baseDirectory, config.viewsDirectory)
-      : "src/views";
+      : path.join(process.cwd(), "src/views");
+    this.dataDirectory = config.dataDirectory
+      ? path.join(this.baseDirectory, config.dataDirectory)
+      : path.join(process.cwd(), "src/data");
+
     this.buildOutputPath = config.buildOutputPath || "dist";
     this.passthroughDirectories = config.passthroughDirectories || [];
 
@@ -49,6 +54,7 @@ export class Bean {
           outputPath: this.buildOutputPath,
           views: this.viewsDirectory,
           filters: this.templateFilters,
+          dataDirectory: this.dataDirectory,
         });
       case "server":
         return buildServerFiles({
@@ -58,6 +64,7 @@ export class Bean {
           views: this.viewsDirectory,
           server: this.server,
           filters: this.templateFilters,
+          dataDirectory: this.dataDirectory,
         });
       default:
         throw new Error(
