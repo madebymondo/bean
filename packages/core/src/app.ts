@@ -23,7 +23,6 @@ const viewsDirectory = beanConfigData.viewsDirectory
   : path.join(process.cwd(), "src/views");
 const templateEngine = beanConfigData.templateEngine ?? "njk";
 
-<<<<<<< HEAD
 const globalDataDirectory = beanConfigData.globalDataDirectory
   ? path.join(baseDirectory, beanConfigData.globalDataDirectory)
   : path.join(process.cwd(), "src/data");
@@ -54,15 +53,14 @@ for (const dataFile of globalDataFiles) {
   app.locals[dataBasename] = data;
 }
 
-server(app);
-=======
 const publicPath =
   beanConfigData.publicPath ?? path.join(process.cwd(), "public");
 
-const app = express();
-
 app.use("/public", express.static(publicPath));
->>>>>>> c2fc705 (feat: add publicPath option to config)
+
+if (server) {
+  server(app);
+}
 
 /* Logic for file based routing */
 for (const filePath of walkSync(pagesDirectory)) {
