@@ -5,6 +5,8 @@ const pages = [
   {
     slug: "about",
     title: `Server About Page`,
+    content:
+      "## this is the content test\n content goes here\n - item one\n - item two",
   },
   {
     slug: "work",
