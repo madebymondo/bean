@@ -1,6 +1,5 @@
 declare module "@bean/core" {
   import { Express } from "express";
-
   /**
    * Configuration options for .bean.json
    */
@@ -40,9 +39,15 @@ declare module "@bean/core" {
      *  Template engine to use for rendering
      * */
     templateEngine?: "njk" | "preact";
+    templateFilters: TemplateFilterFunction[];
     /** Access Express app. This will only work if in development or server mode */
     server?: (app: Express) => void;
   }
+
+  /**
+   * Callback function that has access to template engine
+   */
+  type TemplateFilterFunction = (engine: any) => void;
 
   interface PageContext {
     [key: string]: any;
@@ -86,6 +91,7 @@ declare module "@bean/core" {
     /** Page data sent to render function */
     data: { any };
     app: Express;
+    filters?: BeanConfig["templateFilters"];
   }
 
   interface RenderBuildTemplateParams {
@@ -93,6 +99,7 @@ declare module "@bean/core" {
     views: BeanConfig["viewsDirectory"];
     template: string;
     data: any;
+    filters?: BeanConfig["templateFilters"];
   }
 
   interface GenerateServerTemplateParams {
@@ -102,5 +109,22 @@ declare module "@bean/core" {
     buildPath: BeanConfig["buildOutputPath"];
     server: BeanConfig["server"];
     port: number;
+  }
+
+  interface BuildSiteParams {
+    pagesDirectory: BeanConfig["pagesDirectory"];
+    outputPath: BeanConfig["buildOutputPath"];
+    templateEngine: BeanConfig["templateEngine"];
+    views: BeanConfig["viewsDirectory"];
+    filters?: BeanConfig["templateFilters"];
+  }
+
+  interface BuildServerFilesParams {
+    pagesDirectory: BeanConfig["pagesDirectory"];
+    outputPath: BeanConfig["buildOutputPath"];
+    templateEngine: BeanConfig["templateEngine"];
+    views: BeanConfig["viewsDirectory"];
+    server: BeanConfig["server"];
+    filters?: BeanConfig["templateFilters"];
   }
 }

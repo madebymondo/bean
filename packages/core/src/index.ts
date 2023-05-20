@@ -17,6 +17,7 @@ export class Bean {
   renderMode: BeanConfig["renderMode"];
   templateEngine: BeanConfig["templateEngine"];
   server: BeanConfig["server"];
+  templateFilters: BeanConfig["templateFilters"];
 
   constructor(config: BeanConfig) {
     /* Configuration */
@@ -32,6 +33,7 @@ export class Bean {
 
     this.templateEngine = config.templateEngine || "njk";
     this.server = config.server;
+    this.templateFilters = config.templateFilters ?? [];
 
     this.paths = [];
   }
@@ -46,6 +48,7 @@ export class Bean {
           pagesDirectory: this.pagesDirectory,
           outputPath: this.buildOutputPath,
           views: this.viewsDirectory,
+          filters: this.templateFilters,
         });
       case "server":
         return buildServerFiles({
@@ -54,6 +57,7 @@ export class Bean {
           outputPath: this.buildOutputPath,
           views: this.viewsDirectory,
           server: this.server,
+          filters: this.templateFilters,
         });
       default:
         throw new Error(

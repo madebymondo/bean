@@ -1,5 +1,6 @@
 import { BeanConfig } from "@bean/core";
 import { walkSync } from "@bean/core/dist/utils/walkSync.js";
+import { marked } from "marked";
 
 export default function config(): BeanConfig {
   return {
@@ -15,5 +16,14 @@ export default function config(): BeanConfig {
         next();
       });
     },
+    templateFilters: [markdownFilter],
   };
+}
+
+function markdownFilter(engine) {
+  engine.addFilter("md", (value) => {
+    if (!value) return;
+
+    return marked.parse(value.trim());
+  });
 }

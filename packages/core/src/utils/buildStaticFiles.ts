@@ -1,22 +1,15 @@
 import path from "path";
 import fs from "fs-extra";
 import { walkSync } from "./walkSync.js";
-import { BeanConfig } from "@bean/core";
+import { BeanConfig, BuildSiteParams } from "@bean/core";
 import { compileAndRunTS } from "./compileAndRunTs.js";
 import { renderBuildTemplate } from "./templateEngine.js";
 import chalk from "chalk";
 import { generateHTMLOutputPath } from "./generateHTMLOutputPath.js";
 
-interface BuildSiteParams {
-  pagesDirectory: BeanConfig["pagesDirectory"];
-  outputPath: BeanConfig["buildOutputPath"];
-  templateEngine: BeanConfig["templateEngine"];
-  views: BeanConfig["viewsDirectory"];
-}
-
 export async function buildStaticFiles(params: BuildSiteParams) {
   console.log(chalk.blue(`Building static files...`));
-  const { pagesDirectory, outputPath, views, templateEngine } = params;
+  const { pagesDirectory, outputPath, views, templateEngine, filters } = params;
 
   const pagesPath = path.join(process.cwd(), pagesDirectory);
   const buildPath = path.join(process.cwd(), outputPath);
@@ -46,6 +39,7 @@ export async function buildStaticFiles(params: BuildSiteParams) {
         views,
         template,
         data,
+        filters,
       });
 
       const htmlOutputPath = generateHTMLOutputPath({
