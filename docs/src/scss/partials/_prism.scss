@@ -1,13 +1,8 @@
-/**
- * Nord Theme Originally by Arctic Ice Studio
- * https://nordtheme.com
- *
- * Ported for PrismJS by Zane Hitchcoxc (@zwhitchcox) and Gabriel Ramos (@gabrieluizramos)
- */
+@use "utils/tokens";
 
 code[class*="language-"],
 pre[class*="language-"] {
-  color: #f8f8f2;
+  color: tokens.$color-orange-400;
   background: none;
   text-align: left;
   white-space: pre;
@@ -34,7 +29,7 @@ pre[class*="language-"] {
 
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
-  background: #2e3440;
+  background: tokens.$color-white-300;
 }
 
 /* Inline code */
@@ -48,11 +43,11 @@ pre[class*="language-"] {
 .token.prolog,
 .token.doctype,
 .token.cdata {
-  color: #636f88;
+  color: tokens.$color-orange-400;
 }
 
 .token.punctuation {
-  color: #81a1c1;
+  color: tokens.$color-black-200;
 }
 
 .namespace {
@@ -64,24 +59,27 @@ pre[class*="language-"] {
 .token.constant,
 .token.symbol,
 .token.deleted {
-  color: #81a1c1;
+  color: tokens.$color-orange-500;
 }
 
 .token.number {
-  color: #b48ead;
+  color: tokens.$color-orange-400;
 }
 
 .token.boolean {
-  color: #81a1c1;
+  color: tokens.$color-orange-500;
 }
 
 .token.selector,
 .token.attr-name,
 .token.string,
 .token.char,
-.token.builtin,
 .token.inserted {
-  color: #a3be8c;
+  color: tokens.$color-black-200;
+}
+
+.token.builtin {
+  color: tokens.$color-green-300;
 }
 
 .token.operator,
@@ -90,23 +88,23 @@ pre[class*="language-"] {
 .language-css .token.string,
 .style .token.string,
 .token.variable {
-  color: #81a1c1;
+  color: tokens.$color-orange-500;
 }
 
 .token.atrule,
 .token.attr-value,
 .token.function,
 .token.class-name {
-  color: #88c0d0;
+  color: tokens.$color-green-400;
 }
 
 .token.keyword {
-  color: #81a1c1;
+  color: tokens.$color-orange-500;
 }
 
 .token.regex,
 .token.important {
-  color: #ebcb8b;
+  color: tokens.$color-orange-400;
 }
 
 .token.important,
