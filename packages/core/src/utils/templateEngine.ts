@@ -34,6 +34,12 @@ export function renderBuildTemplate(params: RenderBuildTemplateParams) {
   switch (engine) {
     case "njk":
       nunjucks.configure(views);
+      /*
+      TODO: figure out how to pass server integration here. 
+      Maybe it's better only being a feature for the 'server'
+      render mode
+      */
+
       return nunjucks.render(template, data);
     default:
       throw new Error(
