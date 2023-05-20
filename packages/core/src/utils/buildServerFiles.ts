@@ -12,8 +12,14 @@ import { generateHTMLOutputPath } from "./generateHTMLOutputPath.js";
  * HTML for all pre-rendered routes
  */
 export async function buildServerFiles(params: BuildServerFilesParams) {
-  const { pagesDirectory, outputPath, templateEngine, views, server, filters } =
-    params;
+  const {
+    pagesDirectory,
+    outputPath,
+    templateEngine,
+    views,
+    dataDirectory,
+    filters,
+  } = params;
 
   const viewsPath = path.join(process.cwd(), views);
   const pagesPath = path.join(process.cwd(), pagesDirectory);
@@ -24,6 +30,43 @@ export async function buildServerFiles(params: BuildServerFilesParams) {
     path: string;
     content: Promise<void>;
   }[] = [];
+
+  /* Set global data for routes */
+  const globalDataFiles = fs.readdirSync(dataDirectory);
+
+  const globalDataPromies = globalDataFiles.map(async (dataFile) => {
+    /* Read each data file and get it's default exported function */
+    const dataFileFunctions = await compileAndRunTS(
+      path.join(dataDirectory, dataFile)
+    );
+    const dataFileContents = dataFileFunctions.find(
+      (func) => func.key === "default"
+    );
+
+    /* Get the name of the file and the return value
+    of the callback */
+    const dataBasename = dataFile
+      .replace(dataDirectory, "")
+      .replace(".js", "")
+      .replace(".ts", "");
+
+    return { [dataBasename]: await dataFileContents.callback() };
+  });
+
+  /* Create a globalData object and re-assign values from 
+  this globalDataPromises to it */
+  const globalData = {};
+  await Promise.all(globalDataPromies).then((dataItems) => {
+    for (const dataItem of dataItems) {
+      const key = Object.keys(dataItem)[0];
+      const indexedItem = dataItems.find(
+        (item) => Object.keys(item)[0] === key
+      );
+      const data = indexedItem[key];
+
+      globalData[key] = data;
+    }
+  });
 
   for (const page of walkSync(pagesPath)) {
     const pageContent = await compileAndRunTS(page);
@@ -58,7 +101,7 @@ export async function buildServerFiles(params: BuildServerFilesParams) {
           engine: templateEngine,
           views: viewsPath,
           template,
-          data,
+          data: { ...data, ...globalData },
           filters,
         });
 
