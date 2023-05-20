@@ -22,9 +22,10 @@ export const {
   serverWatchTargets,
   viewsDirectory,
   pagesDirectory,
+  templateFilters,
 } = beanConfigData;
 
-const bean = new Bean(beanConfig.callback());
+const bean = new Bean(beanConfigData);
 
 program
   .command("dev")

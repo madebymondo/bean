@@ -1,4 +1,4 @@
-import { BeanConfig } from "@bean/core";
+import { BeanConfig, BuildServerFilesParams } from "@bean/core";
 import fs from "fs-extra";
 import path from "path";
 import { walkSync } from "./walkSync.js";
@@ -7,20 +7,13 @@ import { renderBuildTemplate } from "./templateEngine.js";
 import chalk from "chalk";
 import { generateHTMLOutputPath } from "./generateHTMLOutputPath.js";
 
-interface BuildServerFilesParams {
-  pagesDirectory: BeanConfig["pagesDirectory"];
-  outputPath: BeanConfig["buildOutputPath"];
-  templateEngine: BeanConfig["templateEngine"];
-  views: BeanConfig["viewsDirectory"];
-  server: BeanConfig["server"];
-}
-
 /**
  * Creates the server.js, manifest and generates
  * HTML for all pre-rendered routes
  */
 export async function buildServerFiles(params: BuildServerFilesParams) {
-  const { pagesDirectory, outputPath, templateEngine, views, server } = params;
+  const { pagesDirectory, outputPath, templateEngine, views, server, filters } =
+    params;
 
   const viewsPath = path.join(process.cwd(), views);
   const pagesPath = path.join(process.cwd(), pagesDirectory);
@@ -66,6 +59,7 @@ export async function buildServerFiles(params: BuildServerFilesParams) {
           views: viewsPath,
           template,
           data,
+          filters,
         });
 
         const htmlOutputPath = generateHTMLOutputPath({

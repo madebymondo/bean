@@ -12,7 +12,7 @@ const beanConfigFunctions = await compileAndRunTS(beanConfigPath);
 const beanConfig = beanConfigFunctions.find((func) => func.key === "default");
 export const beanConfigData = beanConfig.callback();
 
-const { baseDirectory, server } = beanConfigData;
+const { baseDirectory, server, templateFilters } = beanConfigData;
 
 const pagesDirectory = beanConfigData.pagesDirectory
   ? path.join(baseDirectory, beanConfigData.pagesDirectory)
@@ -53,6 +53,7 @@ for (const filePath of walkSync(pagesDirectory)) {
       views: viewsDirectory,
       template: page.context.template,
       data: page.context.data,
+      filters: templateFilters,
       app,
     });
 
