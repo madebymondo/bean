@@ -6,7 +6,6 @@ import { compileAndRunTS, tsCompile } from "./compileAndRunTs.js";
 import { renderBuildTemplate } from "./templateEngine.js";
 import chalk from "chalk";
 import { generateHTMLOutputPath } from "./generateHTMLOutputPath.js";
-import { generateServerTemplate } from "../templates/templateServer.js";
 
 interface BuildServerFilesParams {
   pagesDirectory: BeanConfig["pagesDirectory"];
@@ -128,16 +127,12 @@ export async function buildServerFiles(params: BuildServerFilesParams) {
     }
   }
 
-  /* Generate the content for the server template */
-  const template = generateServerTemplate({
-    pagesDirectory: pagesPath,
-    viewsDirectory: viewsPath,
-    buildPath: buildPath,
-    templateEngine,
-    server,
-    port: 3000,
-  });
-
+  /* Reads the compiled server and writes it to the server build path */
+  const serverTemplatePath = path.join(
+    process.cwd(),
+    "node_modules/@bean/core/dist/templates/server.js"
+  );
+  const template = fs.readFileSync(serverTemplatePath, { encoding: "utf-8" });
   const serverPath = path.join(buildPath, "server.js");
 
   try {
