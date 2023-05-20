@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
 //@ts-ignore
 import { walkSync } from "@bean/core/dist/utils/walkSync.js";
 //@ts-ignore
@@ -12,19 +13,46 @@ const beanConfigFunctions = await compileAndRunTS(beanConfigPath);
 const beanConfig = beanConfigFunctions.find((func) => func.key === "default");
 export const beanConfigData = beanConfig.callback();
 
-const { baseDirectory, server } = beanConfigData;
+const { baseDirectory, server, templateFilters } = beanConfigData;
 
 const viewsDirectory = beanConfigData.viewsDirectory
   ? path.join(baseDirectory, beanConfigData.viewsDirectory)
-  : "src/views";
+  : path.join(process.cwd(), "src/views");
 const templateEngine = beanConfigData.templateEngine ?? "njk";
 const buildPath = beanConfig.buildOutputPath
   ? path.join(baseDirectory, beanConfig.buildOutputPath)
   : path.join(process.cwd(), "dist");
+const globalDataDirectory = beanConfigData.globalDataDirectory
+  ? path.join(baseDirectory, beanConfigData.globalDataDirectory)
+  : path.join(process.cwd(), "src/data");
 
 const PORT = 3000;
 
 const app = express();
+
+/* Set global data for app */
+const globalDataFiles = fs.readdirSync(globalDataDirectory);
+
+for (const dataFile of globalDataFiles) {
+  /* Read each data file and get it's default exported function */
+  const dataFileFunctions = await compileAndRunTS(
+    path.join(globalDataDirectory, dataFile)
+  );
+  const dataFileContents = dataFileFunctions.find(
+    (func) => func.key === "default"
+  );
+
+  /* Get the name of the file and the return value
+    of the callback */
+  const dataBasename = dataFile
+    .replace(globalDataDirectory, "")
+    .replace(".js", "")
+    .replace(".ts", "");
+
+  const data = await dataFileContents.callback();
+
+  app.locals[dataBasename] = data;
+}
 
 server(app);
 
@@ -52,6 +80,7 @@ for (const route of walkSync(`${buildPath}/server-routes`)) {
         template: page.context.template,
         data: page.context.data,
         app,
+        filters: templateFilters,
       });
 
       res.setHeader("Content-Type", "text/html");
