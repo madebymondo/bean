@@ -1,4 +1,5 @@
 import { BeanConfig } from "@bean/core";
+import { walkSync } from "@bean/core/dist/utils/walkSync.js";
 
 export default function config(): BeanConfig {
   return {
@@ -8,13 +9,9 @@ export default function config(): BeanConfig {
     watchTargets: ["**/*", "./bean.config.ts"],
     renderMode: "server",
     server: (app) => {
-      app.use("/about", (res, req, next) => {
-        console.log("this is the homepage");
-        next();
-      });
+      app.use("/blog/*", (req, res, next) => {
+        console.log("this is a blog post rendered on the server");
 
-      app.use("*", (req, res, next) => {
-        console.log("this is a page");
         next();
       });
     },
