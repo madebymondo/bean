@@ -1,0 +1,71 @@
+@use "utils/tokens";
+
+@mixin type($size, $line-height, $letter-spacing: 0, $font-weight: 400) {
+  font-size: $size;
+  font-weight: $font-weight;
+  line-height: $line-height;
+  letter-spacing: $letter-spacing;
+}
+
+@mixin body {
+  --type-label: "body";
+  @include type(1rem, 1.5, 0.1px);
+  font-family: tokens.$font-family-text;
+  color: tokens.$color-black-100;
+}
+
+@mixin body-large {
+  --type-label: "body-large";
+  @include type(1.15rem, 1.5, 0.1px);
+  font-family: tokens.$font-family-text;
+  color: tokens.$color-black-100;
+}
+
+@mixin h1 {
+  --type-label: "h1";
+  @include type(3rem, 1.2, 0.2px, 500);
+  font-family: tokens.$font-family-heading-bold;
+  color: tokens.$color-green-300;
+}
+
+@mixin h2 {
+  --type-label: "h2";
+  @include type(2.25rem, 1.2, 0.2px, 500);
+  font-family: tokens.$font-family-heading-bold;
+  color: tokens.$color-green-300;
+}
+
+@mixin h3 {
+  --type-label: "h3";
+  @include type(1.5rem, 1.2, 0.1px, 500);
+  font-family: tokens.$font-family-heading-bold;
+  color: tokens.$color-green-300;
+}
+
+@mixin h4 {
+  --type-label: "h4";
+  @include type(1.125rem, 1.2, 0, 500);
+  font-family: tokens.$font-family-heading-bold;
+  color: tokens.$color-green-300;
+}
+
+@mixin subheading-large {
+  --type-label: "subheading-large";
+  @include type(1.25rem, 1.2, 0);
+  font-family: tokens.$font-family-heading;
+  color: tokens.$color-black-200;
+}
+
+@mixin subheading-medium {
+  --type-label: "subheading-medium";
+  @include type(1rem, 1.2, 0);
+  font-family: tokens.$font-family-heading;
+  color: tokens.$color-black-200;
+}
+
+@mixin subheading-small {
+  --type-label: "subheading-medium";
+  @include type(0.75rem, 1.2, 0);
+  font-family: tokens.$font-family-heading;
+  color: tokens.$color-black-200;
+}

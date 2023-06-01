@@ -1,0 +1,36 @@
+@use "utils/breakpoints";
+@use "utils/helpers";
+@use "utils/layout";
+@use "utils/tokens";
+@use "utils/type";
+
+.single-column {
+  @include layout.grid;
+  text-align: center;
+}
+
+.single-column__container {
+  grid-column: 1 / -1;
+
+  @include breakpoints.laptop {
+    grid-column: 3 / 11;
+  }
+}
+
+.single-column__headline {
+  margin-bottom: 12px;
+  color: tokens.$color-green-300;
+}
+
+.single-column__body {
+  @include helpers.push-auto;
+  max-width: 65ch;
+}
+
+.single-column__buttons {
+  margin-top: 20px;
+
+  .button {
+    @include helpers.push-auto;
+  }
+}

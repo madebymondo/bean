@@ -14,6 +14,9 @@
     "demo-server:dev": "pnpm core:build && pnpm -F demo-server run dev",
     "demo-server:start": "pnpm core:build && pnpm demo-server:build && pnpm -F demo-server run start",
     "demo-server:build": "pnpm -F demo-server run build",
+    "docs:dev": "pnpm core:build && pnpm docs:tokens && pnpm -F docs run dev",
+    "docs:tokens": "pnpm core:build && pnpm -F docs run tokens",
+    "docs:build": "pnpm core:build && pnpm -F docs run build",
     "packages:build": "pnpm --filter './packages/**' run build"
   },
   "keywords": [],

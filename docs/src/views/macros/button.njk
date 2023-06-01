@@ -1,0 +1,10 @@
+{% macro render(params) %}
+    <a 
+    href="{{params.url}}" 
+    class="button {%- if params.class %} {{params.class}}{% endif -%}" 
+    {% if params.variant %}data-variant="{{params.variant}}"{% endif %}
+    {% if params.target %}target="{{params.target}}"{% endif %}
+    >
+        {{params.label}}
+    </a>
+{% endmacro %}

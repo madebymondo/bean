@@ -1,0 +1,30 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "Documentation site for the bean site generator",
+  "type": "module",
+  "scripts": {
+    "dev": "npm-run-all  --parallel watch:*",
+    "build": "npm-run-all  --parallel build:*",
+    "watch:bean": "bean dev",
+    "watch:sass": "sass --watch --load-path=src/scss src/scss:public/css",
+    "build:sass": "sass --load-path=src/scss src/scss:dist/public/css",
+    "watch:scripts": "esbuild src/ts/*.ts --bundle --outdir=public/js --watch",
+    "build:scripts": "esbuild src/ts/*.ts --bundle --outdir=dist/public/js",
+    "build:bean": "bean build",
+    "tokens": "node ./scripts/generateTokens.js src/scss/utils/_tokens.scss"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@bean/core": "^0.0.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.17.18",
+    "js-yaml": "^4.1.0",
+    "nodemon": "^2.0.22",
+    "npm-run-all": "^4.1.5",
+    "sass": "^1.62.1"
+  }
+}

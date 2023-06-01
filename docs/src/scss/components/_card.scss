@@ -1,0 +1,108 @@
+@use "utils/breakpoints";
+@use "utils/helpers";
+@use "utils/tokens";
+@use "utils/type";
+
+.card {
+  --card-padding: 20px;
+  --card-border-color: #{tokens.$color-orange-500};
+  --card-background: #{tokens.$color-white-200};
+  --card-title-color: #{tokens.$color-orange-500};
+  border-radius: 10px 0 10px 0;
+  border: 1px solid var(--card-border-color);
+  padding: var(--card-padding);
+  background: var(--card-background);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+
+  &::after,
+  &::before {
+    content: "";
+    position: absolute;
+    top: var(--psuedo-top);
+    left: var(--psuedo-left);
+    height: 100%;
+    width: 100%;
+    border-radius: 10px 0 10px 0;
+    background: var(--psuedo-background);
+    transition: all 0.2s tokens.$easing-in-out-quad;
+    z-index: -1;
+  }
+
+  &::after {
+    --psuedo-top: 2.5px;
+    --psuedo-left: 2.5px;
+    --psuedo-background: #{tokens.$color-orange-400};
+  }
+  &::before {
+    --psuedo-top: 5px;
+    --psuedo-left: 5px;
+    --psuedo-background: #{tokens.$color-orange-500};
+  }
+
+  &:hover {
+    --card-border-color: #{tokens.$color-green-400};
+    --card-title-color: #{tokens.$color-green-400};
+
+    .button {
+      --button-border-color: #{tokens.$color-green-400};
+      --button-color: #{tokens.$color-green-400};
+
+      &:hover {
+        --button-color: #{tokens.$color-white-200};
+      }
+    }
+
+    &::after {
+      --psuedo-background: #{tokens.$color-green-300};
+      --psuedo-top: 5px;
+      --psuedo-left: 5px;
+    }
+    &::before {
+      --psuedo-background: #{tokens.$color-green-400};
+      --psuedo-top: 10px;
+      --psuedo-left: 10px;
+    }
+  }
+}
+
+.card__title {
+  @include type.subheading-large;
+  color: var(--card-title-color);
+  margin-bottom: 10px;
+}
+
+.card .button {
+  margin-top: 10px;
+}
+
+.card[data-variant="fullwidth"] {
+  --card-padding: 30px 10px;
+  --card-title-color: #{tokens.$color-orange-500};
+  text-align: center;
+
+  .card__content {
+    @include type.body-large;
+    max-width: 50ch;
+  }
+
+  .card__title {
+    @include type.h2;
+    color: var(--card-title-color);
+  }
+
+  .card__content,
+  .button {
+    @include helpers.push-auto;
+  }
+
+  .button {
+    margin-top: 20px;
+  }
+
+  &:hover {
+    --card-title-color: #{tokens.$color-green-400};
+  }
+}

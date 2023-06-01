@@ -1,0 +1,77 @@
+permalink: /
+meta:
+  title: Home | Bean
+  description: Bean allows you build high performant and high quality websites
+    in a simple yet extremely customizable system.
+  keywords: Static site generator, Website, TypeScript, HTML, CSS, JavaScript
+modules:
+  - type: single-column
+    headline: A hybrid framework for building interactive websites
+    content: |
+      Bean allows you build high performant and high quality websites
+      in a simple yet extremely customizable system. Get data from your
+      favorite CMS and deploy to your favorite platform.
+    buttons:
+      - label: Get Started
+        url: /get-started
+
+  - type: spacer
+    size: sm
+
+  - type: code-block
+    language: bash
+    variant: fit
+    code: |
+      npm i -D @bean/core
+
+  - type: spacer
+    size: lg
+
+  - type: single-column
+    headline: A simpler web
+    content: |
+      Built on the foundations of the web, Bean generates HTML, CSS and JS. There's no need to think about big buzzwords like "hydration" (nothing against that though).
+
+  - type: spacer
+    size: lg
+
+  - type: card-grid
+    headline: All-in-one solution for you website
+    cards:
+      - title: Bring only what you need
+        content: |
+          Ship your site with no JS or throw the kitchen
+          sink at it. The choice is yours
+        button:
+          label: Learn configuration
+          url: /configuration
+      - title: Get content from anywhere
+        content: |
+          From a headless CMS to yaml files, anywhere
+          data can be stored can be integrated into a
+          Bean site.
+        button:
+          label: Learn integrations
+          url: /integrations
+      - title: Scale gracefully
+        content: |
+          Whether you site is a single landing page
+          or thousands of pages. Bean's render modes
+          allows you to always give users the best possible 
+          experience.
+        button:
+          label: Learn render modes
+          url: /render-modes
+
+  - type: spacer
+    size: lg
+
+  - type: fullwidth-card
+    title: Get started with Bean
+    content: |
+      Bean is a great solution for landing pages, ecommerce, marketing websites and more.
+    button:
+      label: Start building today
+      url: /get-started
+
+  - type: spacer

@@ -1,0 +1,38 @@
+@use "utils/breakpoints";
+
+.spacer {
+  --spacer-height: 30px;
+  height: var(--spacer-height);
+
+  &[data-size="sm"] {
+    --spacer-height: 15px;
+  }
+
+  &[data-size="lg"] {
+    --spacer-height: 50px;
+  }
+
+  @include breakpoints.tablet {
+    --spacer-height: 50px;
+
+    &[data-size="sm"] {
+      --spacer-height: 30px;
+    }
+
+    &[data-size="lg"] {
+      --spacer-height: 75px;
+    }
+  }
+
+  @include breakpoints.laptop {
+    --spacer-height: 75px;
+
+    &[data-size="sm"] {
+      --spacer-height: 50px;
+    }
+
+    &[data-size="lg"] {
+      --spacer-height: 100px;
+    }
+  }
+}

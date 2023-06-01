@@ -1,0 +1,12 @@
+{% import 'macros/card.njk' as cardMacro with context %}
+
+<section class="card-grid" {% if module.id %} id="{{module.id}}"{% endif %} >
+    <div class="card-grid__content">
+        <h2 class="card-grid__headline">{{module.headline}}</h2>
+    </div>
+    <div class="card-grid__cards">
+        {% for card in module.cards %}
+            {{cardMacro.render(card)}}
+        {% endfor %}
+    </div>
+</section>

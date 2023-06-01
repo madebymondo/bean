@@ -1,0 +1,121 @@
+@use "utils/tokens";
+
+code[class*="language-"],
+pre[class*="language-"] {
+  color: tokens.$color-orange-400;
+  background: none;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: 1em;
+  margin: 0.5em 0;
+  overflow: auto;
+  border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: tokens.$color-white-300;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: 0.1em;
+  border-radius: 0.3em;
+  white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: tokens.$color-orange-400;
+}
+
+.token.punctuation {
+  color: tokens.$color-black-200;
+}
+
+.namespace {
+  opacity: 0.7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: tokens.$color-orange-500;
+}
+
+.token.number {
+  color: tokens.$color-orange-400;
+}
+
+.token.boolean {
+  color: tokens.$color-orange-500;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.inserted {
+  color: tokens.$color-black-200;
+}
+
+.token.builtin {
+  color: tokens.$color-green-300;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+  color: tokens.$color-orange-500;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+  color: tokens.$color-green-400;
+}
+
+.token.keyword {
+  color: tokens.$color-orange-500;
+}
+
+.token.regex,
+.token.important {
+  color: tokens.$color-orange-400;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}

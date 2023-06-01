@@ -1,0 +1,16 @@
+@use "utils/breakpoints";
+@use "utils/layout";
+@use "utils/tokens";
+@use "utils/type";
+
+.fullwidth-card {
+  @include layout.grid;
+}
+
+.fullwidth-card__container {
+  grid-column: 1/ -1;
+
+  @include breakpoints.desktop {
+    grid-column: 2 / 12;
+  }
+}

@@ -53,7 +53,14 @@ for (const dataFile of globalDataFiles) {
   app.locals[dataBasename] = data;
 }
 
-server(app);
+const publicPath =
+  beanConfigData.publicPath ?? path.join(process.cwd(), "public");
+
+app.use("/public", express.static(publicPath));
+
+if (server) {
+  server(app);
+}
 
 /* Logic for file based routing */
 for (const filePath of walkSync(pagesDirectory)) {
