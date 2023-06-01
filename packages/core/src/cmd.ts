@@ -45,7 +45,7 @@ program
       : baseDirectory;
 
     const serverProcess = exec(
-      `npx nodemon --watch ${nodemonWatchTargets} -e ts,tsx,js,jsx,css,scss,njk ${devSeverPath}`
+      `npx nodemon --watch ${nodemonWatchTargets} -e ts,tsx,js,jsx,css,scss,njk,yaml,json ${devSeverPath}`
     );
 
     bs.init({
@@ -58,7 +58,15 @@ program
       },
       files: watchTargets
         ? watchTargets
-        : ["**/*.js", "**/*.ts", "**/*.njk", "**/*.scss", "**/*.css"],
+        : [
+            "**/*.js",
+            "**/*.ts",
+            "**/*.njk",
+            "**/*.scss",
+            "**/*.css",
+            "**/*.yaml",
+            "**/*.json",
+          ],
       logSnippet: false,
     });
 
