@@ -43,7 +43,7 @@ declare module "@bean/core" {
      *  Template engine to use for rendering
      * */
     templateEngine?: "njk" | "preact";
-    templateFilters: TemplateFilterFunction[];
+    templateFilters?: TemplateFilterFunction[];
     /** Access Express app. This will only work if in development or server mode */
     server?: (app: Express) => void;
   }
