@@ -1,4 +1,5 @@
 @use "utils/type";
+@use "utils/tokens";
 
 @font-face {
   font-family: "Neue Machina Regular";
@@ -42,4 +43,32 @@ h3 {
 
 h4 {
   @include type.h4;
+}
+
+:is(p, li) {
+  a {
+    --link-color: #{tokens.$color-green-300};
+    color: var(--link-color);
+    text-decoration: none;
+
+    &:hover {
+      --link-color: #{tokens.$color-orange-400};
+      text-decoration: underline;
+    }
+  }
+
+  code {
+    padding: 2px 5px;
+    border-radius: 2px;
+    background: tokens.$color-white-300;
+    color: tokens.$color-orange-400;
+  }
+}
+
+li {
+  line-height: 1.5;
+}
+
+li + li {
+  margin-top: 10px;
 }
