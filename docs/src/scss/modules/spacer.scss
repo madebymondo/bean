@@ -4,6 +4,11 @@
   --spacer-height: 30px;
   height: var(--spacer-height);
 
+   &[data-size="xs"] {
+    --spacer-height: 10px;
+  }
+
+
   &[data-size="sm"] {
     --spacer-height: 15px;
   }
@@ -14,6 +19,12 @@
 
   @include breakpoints.tablet {
     --spacer-height: 50px;
+
+
+   &[data-size="xs"] {
+    --spacer-height: 15px;
+  }
+
 
     &[data-size="sm"] {
       --spacer-height: 30px;
@@ -26,6 +37,12 @@
 
   @include breakpoints.laptop {
     --spacer-height: 75px;
+
+
+   &[data-size="xs"] {
+    --spacer-height: 20px;
+  }
+
 
     &[data-size="sm"] {
       --spacer-height: 50px;
