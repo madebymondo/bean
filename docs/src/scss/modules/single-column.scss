@@ -10,10 +10,15 @@
   &--center {
     text-align: center;
 
+    .single-column__body {
+      @include helpers.push-auto;
+    }
+  }
 
-.single-column__body {
-  @include helpers.push-auto;
-}
+  &--heading-small {
+    .single-column__headline {
+      @include type.h4;
+    }
   }
 
   &--heading-large {
