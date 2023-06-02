@@ -1,0 +1,130 @@
+permalink: getting-started
+meta:
+  title: Getting Started | Bean
+  description: Bean allows you build high performant and high quality websites
+    in a simple yet extremely customizable system.
+  keywords: Static site generator, Website, TypeScript, HTML, CSS, JavaScript
+modules:
+  - type: single-column
+    id: system-requirements
+    headline: System Requirements
+    content: |
+      - [Node.js 17.0.0](https://nodejs.org/en) (Bean utilizes ESM)
+
+  - type: spacer
+    size: sm
+
+  - type: single-column
+    id: new-project-with-cli
+    headline: Creating a new project with the CLI
+    content: |
+      New projects can be created using `create-bean` which
+      will scaffold a new Bean site with our recommended folder
+      structure. Follow the prompts to opt-in to features such as
+      SASS and TypeScript.
+
+  - type: spacer
+    size: xs
+
+  - type: code-block
+    language: bash
+    variant: fit
+    code: |
+      npm init bean-site path-to-directory
+
+  - type: spacer
+    size: sm
+
+  - type: single-column
+    id: start-from-scratch
+    headline: Starting a new project from scratch
+    content: |
+      If you want to start a new project from scratch
+      you will need to install the following packages.
+
+  - type: spacer
+    size: xs
+
+  - type: code-block
+    language: bash
+    variant: fit
+    code: |
+      npm i -D bean/core express nodemon
+
+  - type: spacer
+    size: xs
+
+  - type: single-column
+    headline: Create package.json
+    content: |
+      Add the following scripts to the `package.json`
+      - `bean dev` - Runs development server
+      - `bean build` - Builds the site according to the config file.
+        For more information read about [configuration](/configuration)
+        and [render modes](/render-modes).
+      - `bean start` - Used in a production enviroment. This is only needed
+        if the `server` render mode is used.
+    options:
+      - heading-small
+
+  - type: spacer
+    size: xs
+
+  - type: code-block
+    options:
+      - full
+    language: json
+    filename: package.json
+    code: |
+      {
+        "scripts": {
+          "start": "bean start",
+          "dev": "bean dev",
+          "build": "bean build",
+        }
+      }
+
+  - type: spacer
+    size: xs
+
+  - type: single-column
+    headline: Create the configuration file
+    content: |
+      Create a `bean.config.ts` file in the project root.
+      The example below is a basic configuration. You can
+      [learn more about configuration options here](/configuration).
+    options:
+      - heading-small
+
+  - type: spacer
+    size: xs
+
+  - type: code-block
+    options:
+      - full
+    language: typescript
+    filename: bean.config.ts
+    code: |
+      import { BeanConfig } from "@bean/core";
+      import {marked} from 'marked';
+
+      export default function config(): BeanConfig {
+        return {
+          baseDirectory: "src",
+          // The pagesDirectory & viewsDirectory
+          // are relative to the baseDirectory
+          pagesDirectory: "pages",
+          viewsDirectory: "views",
+          // This is an example of creating 
+          // a custom markdown filter
+          templateFilters: [markdownFilter],
+        };
+      }
+
+      function markdownFilter(engine) {
+        engine.addFilter("md", (value) => {
+          if (!value) return;
+
+          return marked.parse(value.trim());
+        });
+      }
