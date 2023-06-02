@@ -3,21 +3,26 @@
 
 .code-block {
   --code-block-default-border-radius: 0.5em;
-  @include helpers.push-auto;
   --code-block-font-size: 16px;
-  @include layout.container;
+  @include layout.grid;
   position: relative;
   margin-top: 0;
   width: 100%;
-  max-width: 700px;
 
   &[data-variant="fit"] {
-    width: fit-content;
+    .code-block__figure {
+      width: fit-content;
+    }
   }
 
   &--has-filename {
     --code-block-pre-border-radius: 0;
   }
+}
+
+.code-block__figure {
+  display: block;
+  grid-column: 3 / -1;
 }
 
 .code-block__filename {

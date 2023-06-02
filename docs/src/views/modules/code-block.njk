@@ -1,6 +1,8 @@
-<figure class="code-block {%- if module.filename %} code-block--has-filename{%- endif %}" {% if module.variant%}data-variant="{{module.variant}}"{% endif %} {% if module.id %} id="{{module.id}}"{% endif %}>
-    {% if module.filename %}
-        <figcaption class="code-block__filename">{{module.filename}}</figcaption>
-    {% endif %}
-    <pre class="code-block__pre"><code class="code-block__pre__code language-{{module.language}}">{{- module.code -}}</code></pre>
-</figure>
+<div class="code-block {%- for option in  module.options %} code-block--{{option}} {%- endif %}" {% if module.variant%}data-variant="{{module.variant}}"{% endif %} {% if module.id %} id="{{module.id}}"{% endif %}>
+    <figure class="code-block__figure">
+        {% if module.filename %}
+            <figcaption class="code-block__filename">{{module.filename}}</figcaption>
+        {% endif %}
+        <pre class="code-block__pre"><code class="code-block__pre__code language-{{module.language}}">{{- module.code -}}</code></pre>
+    </figure>
+</div>

@@ -1,0 +1,31 @@
+permalink: installation
+meta:
+  title: Installation | Bean
+  description: Bean allows you build high performant and high quality websites
+    in a simple yet extremely customizable system.
+  keywords: Static site generator, Website, TypeScript, HTML, CSS, JavaScript
+modules:
+  - type: single-column
+    headline: System Requirements
+    content: |
+      - [Node.js 17.0.0](https://nodejs.org/en) (Bean utilizes ESM)
+
+  - type: spacer
+    size: sm
+
+  - type: single-column
+    headline: Creating a new project with the CLI
+    content: |
+      New projects can be created using `create-bean` which
+      will scaffold a new Bean site with our recommended folder
+      structure. (**Note**: This isn't required and you can set 
+      up a project from scratch)
+
+  - type: spacer
+    size: sm
+
+  - type: code-block
+    language: bash
+    variant: fit
+    code: |
+      npm init bean-site path-to-directory

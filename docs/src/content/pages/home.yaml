@@ -14,6 +14,9 @@ modules:
     buttons:
       - label: Get Started
         url: /get-started
+    options:
+      - center
+      - heading-large
 
   - type: spacer
     size: sm
@@ -31,6 +34,10 @@ modules:
     headline: A simpler web
     content: |
       Built on the foundations of the web, Bean generates HTML, CSS and JS. There's no need to think about big buzzwords like "hydration" (nothing against that though).
+    options:
+      - center
+      - heading-large
+
 
   - type: spacer
     size: lg

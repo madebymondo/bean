@@ -6,7 +6,21 @@
 
 .single-column {
   @include layout.grid;
-  text-align: center;
+
+  &--center {
+    text-align: center;
+
+
+.single-column__body {
+  @include helpers.push-auto;
+}
+  }
+
+  &--heading-large {
+    .single-column__headline {
+      @include type.h2;
+    }
+  }
 }
 
 .single-column__container {
@@ -18,12 +32,12 @@
 }
 
 .single-column__headline {
+  @include type.h3;
   margin-bottom: 12px;
   color: tokens.$color-green-300;
 }
 
 .single-column__body {
-  @include helpers.push-auto;
   max-width: 65ch;
 }
 
