@@ -79,6 +79,6 @@ modules:
       Bean is a great solution for landing pages, ecommerce, marketing websites and more.
     button:
       label: Start building today
-      url: /get-started
+      url: /getting-started
 
   - type: spacer
