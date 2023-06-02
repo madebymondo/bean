@@ -14,6 +14,6 @@ function markdownFilter(engine) {
   engine.addFilter("md", (value) => {
     if (!value) return;
 
-    return marked.parse(value.trim());
+    return marked.parse(value.trim(), { headerIds: false, mangle: false });
   });
 }
