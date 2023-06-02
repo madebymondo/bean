@@ -5,6 +5,5 @@ export default function config(): BeanConfig {
     baseDirectory: "src",
     pagesDirectory: "pages",
     viewsDirectory: "views",
-    watchTargets: ["**/*"],
   };
 }

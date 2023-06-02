@@ -30,27 +30,30 @@ const globalDataDirectory = beanConfigData.globalDataDirectory
 const app = express();
 
 /* Set global data for app */
-const globalDataFiles = fs.readdirSync(globalDataDirectory);
+        const globalDataDirectoryExists = fs.existsSync(globalDataDirectory)
 
-for (const dataFile of globalDataFiles) {
-  /* Read each data file and get it's default exported function */
-  const dataFileFunctions = await compileAndRunTS(
-    path.join(globalDataDirectory, dataFile)
-  );
-  const dataFileContents = dataFileFunctions.find(
-    (func) => func.key === "default"
-  );
+if (globalDataDirectoryExists) {
+  const globalDataFiles = fs.readdirSync(globalDataDirectory);
+  for (const dataFile of globalDataFiles) {
+    /* Read each data file and get it's default exported function */
+    const dataFileFunctions = await compileAndRunTS(
+      path.join(globalDataDirectory, dataFile)
+    );
+    const dataFileContents = dataFileFunctions.find(
+      (func) => func.key === "default"
+    );
 
-  /* Get the name of the file and the return value
+    /* Get the name of the file and the return value
     of the callback */
-  const dataBasename = dataFile
-    .replace(globalDataDirectory, "")
-    .replace(".js", "")
-    .replace(".ts", "");
+    const dataBasename = dataFile
+      .replace(globalDataDirectory, "")
+      .replace(".js", "")
+      .replace(".ts", "");
 
-  const data = await dataFileContents.callback();
+    const data = await dataFileContents.callback();
 
-  app.locals[dataBasename] = data;
+    app.locals[dataBasename] = data;
+  }
 }
 
 const publicPath =

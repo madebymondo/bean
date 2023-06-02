@@ -10,7 +10,7 @@ const pages = [
     slug: "work",
     title: "Work Page 2",
   },
-  { slug: "test/one", title: "Test one" },
+  { slug: "test/one", title: "Test one page" },
 ];
 
 export function createPage(ctx): CreatePageParams {
@@ -19,7 +19,10 @@ export function createPage(ctx): CreatePageParams {
     context: {
       slug,
       template: "base.njk",
-      data: pages.find((page) => page.slug === slug),
+      data: pages.find((page) => {
+        let pageSlug = slug ? slug : "/";
+        return pageSlug === page.slug;
+      }),
     },
   };
 }

@@ -29,6 +29,17 @@ importers:
   demo/demo-static:
     specifiers:
       '@bean/core': ^0.0.1
+      express: ^4.18.2
+      fs-extra: ^11.1.1
+      nodemon: ^2.0.22
+      ts-node: ^10.9.1
+    dependencies:
+      '@bean/core': link:../../packages/core
+    devDependencies:
+      express: 4.18.2
+      fs-extra: 11.1.1
+      nodemon: 2.0.22
+      ts-node: 10.9.1
 
   docs:
     specifiers:
