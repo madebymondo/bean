@@ -31,6 +31,10 @@ const PORT = 3000;
 const app = express();
 
 /* Set global data for app */
+const globalDataDirectoryExists = fs.existsSync(globalDataDirectory);
+
+    if(globalDataDirectoryExists){
+
 const globalDataFiles = fs.readdirSync(globalDataDirectory);
 
 for (const dataFile of globalDataFiles) {
@@ -53,6 +57,7 @@ for (const dataFile of globalDataFiles) {
 
   app.locals[dataBasename] = data;
 }
+    }
 
 const publicPath =
   beanConfigData.publicPath ?? path.join(process.cwd(), "public");

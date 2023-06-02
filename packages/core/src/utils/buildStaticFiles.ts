@@ -22,41 +22,45 @@ export async function buildStaticFiles(params: BuildSiteParams) {
   const buildPath = path.join(process.cwd(), outputPath);
 
   /* Set global data for routes */
-  const globalDataFiles = fs.readdirSync(dataDirectory);
+  const globalDataDirExists = fs.existsSync(dataDirectory);
+  let globalData = {};
 
-  const globalDataPromies = globalDataFiles.map(async (dataFile) => {
-    /* Read each data file and get it's default exported function */
-    const dataFileFunctions = await compileAndRunTS(
-      path.join(dataDirectory, dataFile)
-    );
-    const dataFileContents = dataFileFunctions.find(
-      (func) => func.key === "default"
-    );
+  if (globalDataDirExists) {
+    const globalDataFiles = fs.readdirSync(dataDirectory);
 
-    /* Get the name of the file and the return value
-    of the callback */
-    const dataBasename = dataFile
-      .replace(dataDirectory, "")
-      .replace(".js", "")
-      .replace(".ts", "");
-
-    return { [dataBasename]: await dataFileContents.callback() };
-  });
-
-  /* Create a globalData object and re-assign values from 
-  this globalDataPromises to it */
-  const globalData = {};
-  await Promise.all(globalDataPromies).then((dataItems) => {
-    for (const dataItem of dataItems) {
-      const key = Object.keys(dataItem)[0];
-      const indexedItem = dataItems.find(
-        (item) => Object.keys(item)[0] === key
+    const globalDataPromies = globalDataFiles.map(async (dataFile) => {
+      /* Read each data file and get it's default exported function */
+      const dataFileFunctions = await compileAndRunTS(
+        path.join(dataDirectory, dataFile)
       );
-      const data = indexedItem[key];
+      const dataFileContents = dataFileFunctions.find(
+        (func) => func.key === "default"
+      );
 
-      globalData[key] = data;
-    }
-  });
+      /* Get the name of the file and the return value
+    of the callback */
+      const dataBasename = dataFile
+        .replace(dataDirectory, "")
+        .replace(".js", "")
+        .replace(".ts", "");
+
+      return { [dataBasename]: await dataFileContents.callback() };
+    });
+
+    /* Create a globalData object and re-assign values from 
+  this globalDataPromises to it */
+    await Promise.all(globalDataPromies).then((dataItems) => {
+      for (const dataItem of dataItems) {
+        const key = Object.keys(dataItem)[0];
+        const indexedItem = dataItems.find(
+          (item) => Object.keys(item)[0] === key
+        );
+        const data = indexedItem[key];
+
+        globalData[key] = data;
+      }
+    });
+  }
 
   /* Generate static HTML for each page */
   for (const pagePath of walkSync(pagesPath)) {
