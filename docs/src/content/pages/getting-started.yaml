@@ -5,6 +5,9 @@ meta:
     in a simple yet extremely customizable system.
   keywords: Static site generator, Website, TypeScript, HTML, CSS, JavaScript
 modules:
+  - type: spacer
+    size: sm
+
   - type: single-column
     id: system-requirements
     headline: System Requirements
@@ -49,7 +52,7 @@ modules:
     language: bash
     variant: fit
     code: |
-      npm i -D bean/core express nodemon
+      npm i -D @bean/core express nodemon nunjucks fs-extra ts-node
 
   - type: spacer
     size: xs
@@ -128,3 +131,120 @@ modules:
           return marked.parse(value.trim());
         });
       }
+
+  - type: spacer
+    size: xs
+
+  - type: single-column
+    headline: Create pages and views
+    content: |
+      The `viewsDirectory` contains all template files. By default
+      Bean has as built-in integration with nunjucks. The `pagesDirectory`
+      contain `typescript` files used to pass data to the
+      templates. Both directories are realtive to the `baseDirectory` specified
+      in the configuration file above. You can read more about [configuring the 
+      pages directory here](/creating-pages).
+    options:
+      - heading-small
+
+  - type: spacer
+    size: xs
+
+  - type: code-block
+    options:
+      - full
+    language: liquid
+    filename: src/views/base.njk
+    code: |
+      <!doctype html>
+      <html>
+          <head>
+              <meta charset="UTF-8">
+              <title>Bean Demo</title>
+          </head>
+
+          <body>
+              <h1>{{title}}</h1>
+              <p>This is the {{title}} content.</p>
+          </body>
+      </html>
+
+  - type: spacer
+    size: xs
+
+  - type: code-block
+    options:
+      - full
+    language: typescript
+    filename: src/pages/[slug].ts
+    code: |
+      import { CreatePageParams } from "@bean/core";
+
+      /* Mock pages data */
+      const pages = [
+        { slug: "/", title: "Homepage" },
+       ];
+
+      export function createPage(ctx): CreatePageParams {
+        const slug = ctx.params.slug;
+        return {
+          context: {
+            slug,
+            template: "base.njk",
+            /* Data that will be passed to template.
+            This can come from any data source
+            (example: CMS, YAML, JSON). */
+            data: pages.find((page) => {
+              let pageSlug = slug ? slug : "/";
+              return pageSlug === page.slug;
+            }),
+          },
+        };
+      }
+
+      /* Only used for SSG, not needed if 
+      you are using the server render mode */
+      export function createPaths() {
+        const paths = pages.map((page) => {
+          return {
+            slug: page.slug,
+          };
+        });
+
+        return {
+          paths,
+        };
+      }
+
+  - type: spacer
+    size: xs
+
+  - type: code-block
+    options:
+      - full
+    language: liquid
+    filename: Generated index.html
+    code: |
+      <!doctype html>
+      <html>
+          <head>
+              <meta charset="UTF-8">
+              <title>Bean Demo</title>
+          </head>
+
+          <body>
+              <h1>Homepage</h1>
+              <p>This is the Homepage content.</p>
+          </body>
+      </html>
+
+  - type: spacer
+    size: sm
+
+  - type: single-column
+    headline: Run the development server
+    content: |
+      Now that you're all set up. Run `npm run dev`
+      and begin building you next big project!
+
+  - type: spacer
