@@ -13,7 +13,7 @@ modules:
       favorite CMS and deploy to your favorite platform.
     buttons:
       - label: Get Started
-        url: /get-started
+        url: /getting-started
     options:
       - center
       - heading-large
@@ -23,9 +23,10 @@ modules:
 
   - type: code-block
     language: bash
-    variant: fit
     code: |
       npm i -D @bean/core
+    options:
+      - center
 
   - type: spacer
     size: lg
@@ -37,7 +38,6 @@ modules:
     options:
       - center
       - heading-large
-
 
   - type: spacer
     size: lg
