@@ -7,7 +7,6 @@ export default function config(): BeanConfig {
     baseDirectory: "src",
     pagesDirectory: "pages",
     viewsDirectory: "views",
-    watchTargets: ["**/*", "./bean.config.ts"],
     renderMode: "server",
     server: (app) => {
       app.use("/blog/*", (req, res, next) => {
