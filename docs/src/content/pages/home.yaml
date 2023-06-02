@@ -19,16 +19,6 @@ modules:
       - heading-large
 
   - type: spacer
-    size: sm
-
-  - type: code-block
-    language: bash
-    code: |
-      npm i -D @bean/core
-    options:
-      - center
-
-  - type: spacer
     size: lg
 
   - type: single-column
