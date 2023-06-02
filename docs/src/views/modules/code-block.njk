@@ -1,4 +1,4 @@
-<div class="code-block {%- for option in  module.options %} code-block--{{option}} {%- endif %}" {% if module.variant%}data-variant="{{module.variant}}"{% endif %} {% if module.id %} id="{{module.id}}"{% endif %}>
+<div class="code-block {%- if module.filename %} code-block--has-filename {%- endif %} {%- for option in  module.options %} code-block--{{option}} {%- endfor %}" {% if module.id %} id="{{module.id}}"{% endif %}>
     <figure class="code-block__figure">
         {% if module.filename %}
             <figcaption class="code-block__filename">{{module.filename}}</figcaption>
