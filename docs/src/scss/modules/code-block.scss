@@ -1,5 +1,8 @@
+@use "utils/breakpoints";
 @use "utils/layout";
 @use "utils/helpers";
+@use "utils/tokens";
+@use "utils/type";
 
 .code-block {
   --code-block-default-border-radius: 0.5em;
@@ -7,11 +10,18 @@
   @include layout.grid;
   position: relative;
   margin-top: 0;
-  width: 100%;
 
-  &[data-variant="fit"] {
+  &--full {
     .code-block__figure {
-      width: fit-content;
+      width: 100%;
+      max-width: 600px;
+    }
+  }
+
+  &--center {
+    .code-block__figure {
+      grid-column: 1 / -1;
+      @include helpers.push-auto;
     }
   }
 
@@ -21,8 +31,13 @@
 }
 
 .code-block__figure {
+  width: fit-content;
   display: block;
-  grid-column: 3 / -1;
+  grid-column: 1/ -1;
+
+  @include breakpoints.laptop {
+    grid-column: 3 / -1;
+  }
 }
 
 .code-block__filename {
@@ -51,4 +66,30 @@ pre.code-block__pre {
   display: block;
   -webkit-overflow-scrolling: touch;
   overflow-x: auto;
+  overflow-y: hidden;
+  cursor: copy;
+  position: relative;
+
+  &:after {
+    @include type.subheading-small;
+    content: "Copied to clipboard!";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    background: tokens.$color-green-400;
+    color: tokens.$color-white-100;
+    padding: 5px 12px;
+    line-height: 1;
+    vertical-align: center;
+    border-radius: 5px;
+    display: none;
+    pointer-events: none;
+  }
+
+  &--selected {
+    &:after {
+      display: block;
+    }
+  }
 }
