@@ -14,7 +14,7 @@
   &--full {
     .code-block__figure {
       width: 100%;
-      max-width: 600px;
+      max-width: 700px;
     }
   }
 
@@ -47,8 +47,8 @@
   border-top-right-radius: var(--code-block-default-border-radius);
   padding: 5px 12px;
   width: fit-content;
-  background: #2e3440;
-  color: #f8f8f2;
+  background: tokens.$color-black-200;
+  color: tokens.$color-white-100;
   font-size: 12px;
 }
 
@@ -57,6 +57,7 @@ pre.code-block__pre {
     --code-block-pre-border-radius,
     var(--code-block-default-border-radius)
   );
+  border: 1px solid tokens.$color-black-200;
   margin-top: 0;
 }
 
