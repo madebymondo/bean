@@ -2,7 +2,7 @@
 
 code[class*="language-"],
 pre[class*="language-"] {
-  color: tokens.$color-orange-400;
+  color: tokens.$color-orange-500;
   background: none;
   text-align: left;
   white-space: pre;
@@ -39,7 +39,10 @@ pre[class*="language-"] {
   white-space: normal;
 }
 
-.token.comment,
+.token.comment {
+  color: tokens.$color-black-100;
+}
+
 .token.prolog,
 .token.doctype,
 .token.cdata {
@@ -70,9 +73,12 @@ pre[class*="language-"] {
   color: tokens.$color-orange-500;
 }
 
+.token.string {
+  color: tokens.$color-green-300;
+}
+
 .token.selector,
 .token.attr-name,
-.token.string,
 .token.char,
 .token.inserted {
   color: tokens.$color-black-200;
@@ -99,7 +105,7 @@ pre[class*="language-"] {
 }
 
 .token.keyword {
-  color: tokens.$color-orange-500;
+  color: tokens.$color-orange-400;
 }
 
 .token.regex,

@@ -1,22 +1,42 @@
+@use "utils/breakpoints";
 @use "utils/layout";
 @use "utils/helpers";
+@use "utils/tokens";
+@use "utils/type";
 
 .code-block {
   --code-block-default-border-radius: 0.5em;
-  @include helpers.push-auto;
   --code-block-font-size: 16px;
-  @include layout.container;
+  @include layout.grid;
   position: relative;
   margin-top: 0;
-  width: 100%;
-  max-width: 700px;
 
-  &[data-variant="fit"] {
-    width: fit-content;
+  &--full {
+    .code-block__figure {
+      width: 100%;
+      max-width: 700px;
+    }
+  }
+
+  &--center {
+    .code-block__figure {
+      grid-column: 1 / -1;
+      @include helpers.push-auto;
+    }
   }
 
   &--has-filename {
     --code-block-pre-border-radius: 0;
+  }
+}
+
+.code-block__figure {
+  width: fit-content;
+  display: block;
+  grid-column: 1/ -1;
+
+  @include breakpoints.laptop {
+    grid-column: 3 / -1;
   }
 }
 
@@ -27,8 +47,8 @@
   border-top-right-radius: var(--code-block-default-border-radius);
   padding: 5px 12px;
   width: fit-content;
-  background: #2e3440;
-  color: #f8f8f2;
+  background: tokens.$color-black-200;
+  color: tokens.$color-white-100;
   font-size: 12px;
 }
 
@@ -37,6 +57,7 @@ pre.code-block__pre {
     --code-block-pre-border-radius,
     var(--code-block-default-border-radius)
   );
+  border: 1px solid tokens.$color-black-200;
   margin-top: 0;
 }
 
@@ -46,4 +67,30 @@ pre.code-block__pre {
   display: block;
   -webkit-overflow-scrolling: touch;
   overflow-x: auto;
+  overflow-y: hidden;
+  cursor: copy;
+  position: relative;
+
+  &:after {
+    @include type.subheading-small;
+    content: "Copied to clipboard!";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    background: tokens.$color-green-400;
+    color: tokens.$color-white-100;
+    padding: 5px 12px;
+    line-height: 1;
+    vertical-align: center;
+    border-radius: 5px;
+    display: none;
+    pointer-events: none;
+  }
+
+  &--selected {
+    &:after {
+      display: block;
+    }
+  }
 }

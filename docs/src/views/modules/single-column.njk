@@ -1,9 +1,9 @@
 {% import 'macros/button.njk' as buttonMacro with context %}
 
-<section class="single-column" {% if module.id %} id="{{module.id}}"{% endif %}>
+<section class="single-column {%- for option in  module.options %} single-column--{{option}} {%- endfor %}" {% if module.id %} id="{{module.id}}"{% endif %}>
     <div class="single-column__container">
         <h2 class="single-column__headline">{{module.headline}}</h2>
-        <div class="single-column__body">{{module.content}}</div>
+        <div class="single-column__body">{{module.content|md|safe}}</div>
         {% if module.buttons %}
             <div class="single-column__buttons">
                 {% for button in module.buttons %}
